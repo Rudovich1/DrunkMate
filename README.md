@@ -10,7 +10,7 @@ DrunkMate
 
 Каталог рецептов
 
-# Данные
+# Данные [abd](https://github.com/Rudovich1/DrunkMate/blob/main/DrunkDiagram.drawio)
 
 Коктейли, пользователи, ингредиенты, тэги, отзывы, картинки
 
