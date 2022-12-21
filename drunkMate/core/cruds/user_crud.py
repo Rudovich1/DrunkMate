@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-from drunkMate.models import settings
+from drunkMate.service.db.models import settings
 from drunkMate.core.token import TokenData
 from drunkMate.core import repository
 

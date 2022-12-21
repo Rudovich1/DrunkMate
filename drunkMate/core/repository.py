@@ -2,7 +2,7 @@ from bson.objectid import ObjectId
 from enum import Enum
 
 from drunkMate.service.db.mongo import database
-from drunkMate.models import user
+from drunkMate.service.db.models import user
 
 drunkMate_db = database.get_database(database.DBSettings())
 
@@ -98,13 +98,14 @@ def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
 
 def post_comment(item: dict, db=drunkMate_db):
     collection = db["comments"]
-    collection.
+    collection.update_one()
 
 
 def get_comment(comment_id: str, db=drunkMate_db):
     collection = db['comments']
 
     return collection.find_one({'_id': ObjectId(comment_id)})
+
 
 def delete_comment(comment_id: str, db=drunkMate_db):
     collection = db['comments']
