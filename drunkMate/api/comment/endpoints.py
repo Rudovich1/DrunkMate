@@ -23,6 +23,6 @@ async def delete_comment(comment: contract.CommentRequest,
 
     raise HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
-        detail="Forbidden error",
+        detail="Not enough rights",
         headers={"WWW-Authenticate": "Bearer"},
     )
