@@ -11,6 +11,11 @@ class CPostComment(BaseModel):
     author_id: str
 
 
+class CDeleteComment(BaseModel):
+    comment_id: str
+    cocktail_id: str
+    author_login: str
+
 class Author(BaseModel):
     id: str
     name: str

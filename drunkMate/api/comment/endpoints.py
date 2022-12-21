@@ -15,14 +15,14 @@ async def post_comment(data: contract.CPostComment):
 
 
 @router.delete("/comment api/delete comment")
-async def delete_comment(comment: contract.CommentDeletionRequest,
+async def delete_comment(comment: contract.CDeleteComment,
                          current_user: User = Depends(user_crud.get_current_user)):
 
-    if current_user.role == 1 or str(current_user.dict()['_id']) == comment.author.id:
+    if current_user.role == 1 or str(current_user.dict()['login']) == comment.author_login:
         await comment_crud.delete_comment(str(comment.dict()['_id']), comment.cocktail_id)
-
-    raise HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="Not enough rights",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enough rights",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
