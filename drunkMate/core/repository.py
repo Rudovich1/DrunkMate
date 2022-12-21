@@ -96,5 +96,6 @@ def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
 # --------------------------------COMMENT--------------------------------
 
 
-def post_comment(db=drunkMate_db):
+def post_comment(item: dict, db=drunkMate_db):
     collection = db["comments"]
+    collection.
