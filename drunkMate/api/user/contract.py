@@ -1,4 +1,4 @@
-from typing import List
+from bson.objectid import ObjectId
 
 from pydantic import BaseModel, Field
 

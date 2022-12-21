@@ -1,4 +1,7 @@
 from pydantic import BaseModel, Field
+from bson.objectid import ObjectId
+
+from drunkMate.api.user import contract
 
 
 class Author(BaseModel):
@@ -17,3 +20,7 @@ class CommentRequest(CommentBase):
 
 class CommentResponse(CommentBase):
     author: Author
+
+
+class UserWithId(contract.User):
+    _id: ObjectId

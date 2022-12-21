@@ -23,7 +23,7 @@ class Strength(Enum):
 
 
 def get_user(login: str, db=drunkMate_db):
-    users_collection = db["users_collection"]
+    users_collection = db["users"]
     respond = users_collection.find_one({"login": login})
     if respond:
         respond = dict(respond)
@@ -38,7 +38,7 @@ def add_user(item: dict, db=drunkMate_db):
         # image=,
         role=Role.USER.value
     )
-    users_collection = db["users_collection"]
+    users_collection = db["users"]
     users_collection.insert_one(usr.dict())
 
 
@@ -48,7 +48,7 @@ def add_user(item: dict, db=drunkMate_db):
 def get_cocktail(cocktail_id: str, db=drunkMate_db):
     try:
         cocktail_id = ObjectId(cocktail_id)
-        cocktail_collection = db["cocktails_collection"]
+        cocktail_collection = db["cocktails"]
         cocktail = cocktail_collection.find_one({"_id": cocktail_id})
     except:
         cocktail = None
@@ -59,14 +59,14 @@ def get_cocktail(cocktail_id: str, db=drunkMate_db):
 
 
 def create_ingredient(item: dict, db=drunkMate_db):
-    collection = db["ingredients_collection"]
+    collection = db["ingredients"]
     resp = collection.find_one({'name': item['name']})
     if resp is None:
         collection.insert_one(item)
 
 
 def get_ingredients(db=drunkMate_db):
-    collection = db["ingredients_collection"]
+    collection = db["ingredients"]
     return list(collection.find())
 
 
@@ -75,19 +75,26 @@ def get_ingredients(db=drunkMate_db):
 
 def create_tag(item: dict, is_ingredient: bool, db=drunkMate_db):
     if is_ingredient:
-        collection = db["ingredient_tags_collection"]
+        collection = db["ingredient_tags"]
     else:
-        collection = db["cocktail_tags_collection"]
+        collection = db["cocktail_tags"]
     collection.update_one(filter={'name': item['name']}, update={'$set': item}, upsert=True)
 
 
 def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
     if is_ingredient:
-        collection = db["ingredient_tags_collection"]
+        collection = db["ingredient_tags"]
     else:
-        collection = db["cocktail_tags_collection"]
+        collection = db["cocktail_tags"]
     if ids is None:
         resp = collection.find()
     else:
         resp = collection.find({"_id": {"$in": ids}})
     return list(resp)
+
+
+# --------------------------------COMMENT--------------------------------
+
+
+def post_comment(db=drunkMate_db):
+    collection = db["comments"]
