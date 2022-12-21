@@ -99,3 +99,13 @@ def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
 def post_comment(item: dict, db=drunkMate_db):
     collection = db["comments"]
     collection.
+
+
+def get_comment(comment_id: str, db=drunkMate_db):
+    collection = db['comments']
+
+    return collection.find_one({'_id': ObjectId(comment_id)})
+
+def delete_comment(comment_id: str, db=drunkMate_db):
+    collection = db['comments']
+    collection.delete_one({'_id': ObjectId(comment_id)})

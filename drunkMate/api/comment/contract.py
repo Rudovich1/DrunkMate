@@ -12,15 +12,13 @@ class Author(BaseModel):
 class CommentBase(BaseModel):
     text: str = Field(max_length=1000)
     rating: int
+    author: Author
 
 
 class CommentRequest(CommentBase):
     cocktail_id: str
 
 
-class CommentResponse(CommentBase):
-    author: Author
-
-
-class UserWithId(contract.User):
+class User(contract.User):
     _id: ObjectId
+    role: int

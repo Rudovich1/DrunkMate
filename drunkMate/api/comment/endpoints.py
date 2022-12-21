@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
+from starlette import status
 
 from drunkMate.api.comment import contract
 from drunkMate.core.cruds import comment_crud, user_crud
@@ -13,3 +14,16 @@ async def post_comment(comment_creation: contract.CommentRequest,
     comment_creation = dict(comment_creation)
     current_user.
     comment_crud
+
+@router.delete("/coment api/delete comment")
+async def delete_comment(comment: contract.CommentRequest,
+                         current_user: User = Depends(user_crud.get_current_user)):
+
+    if current_user.role == 1 or str(current_user.dict()['_id']) == comment.author.id:
+        await comment_crud.delete_comment(comment)
+
+    raise HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="Forbidden error",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
