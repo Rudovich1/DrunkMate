@@ -1,7 +1,7 @@
 import toolz
 from fastapi import FastAPI
 
-from . import auth, user, cocktail, tag, ingredient
+from . import auth, user, cocktail, tag, ingredient, comment
 
 
 def create_app() -> FastAPI:
@@ -12,4 +12,5 @@ def create_app() -> FastAPI:
         cocktail.bootstrap,
         tag.bootstrap,
         ingredient.bootstrap,
+        comment.bootstrap,
     )
