@@ -55,6 +55,10 @@ def get_cocktail(cocktail_id: str, db=drunkMate_db):
     return cocktail
 
 
+def update_cocktail(cocktail_id: str, item:dict, db=drunkMate_db):
+    collection = db['cocktails']
+    collection.update_one({'_id': ObjectId(cocktail_id)}, {'$set': item})
+
 # --------------------------------INGREDIENT--------------------------------
 
 
@@ -96,9 +100,14 @@ def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
 # --------------------------------COMMENT--------------------------------
 
 
-def post_comment(item: dict, db=drunkMate_db):
+def post_comment(author_id: str, text: str, rating: int, db=drunkMate_db):
     collection = db["comments"]
-    collection.update_one()
+    collection.insert_one({'author': ObjectId(author_id), 'text': text, 'rating': rating})
+
+
+def update_comment(comment_id: str, text: str, rating: int, db=drunkMate_db):
+    collection = db['comments']
+    collection.update_one({'_id': comment_id}, {'$set': {'text': text, 'rating': rating}})
 
 
 def get_comment(comment_id: str, db=drunkMate_db):

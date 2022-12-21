@@ -4,6 +4,13 @@ from bson.objectid import ObjectId
 from drunkMate.api.user import contract
 
 
+class CPostComment(BaseModel):
+    text: str
+    rating: int
+    cocktail_id: str
+    author_id: str
+
+
 class Author(BaseModel):
     id: str
     name: str
@@ -14,7 +21,7 @@ class CommentBase(BaseModel):
     rating: int
 
 
-class CommentRequest(CommentBase):
+class CommentRequest(BaseModel):
     cocktail_id: str
 
 
