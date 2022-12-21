@@ -16,3 +16,7 @@ async def delete_comment(comment_id: str, cocktail_id: str):
     cocktail['rating'] = (cocktail['rating']*len(cocktail['comments']) - comment['rating'])/(len(cocktail['comments']) - 1)
 
     cocktail['comments'] = cocktail['comments'].remove(ObjectId(comment_id))
+
+
+async def add_comment(comment_id, cocktail_id):
+    pass

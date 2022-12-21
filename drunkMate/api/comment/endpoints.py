@@ -12,10 +12,11 @@ router = APIRouter()
 async def post_comment(comment_creation: contract.CommentRequest,
                        current_user: User = Depends(user_crud.get_current_user)):
     comment_creation = dict(comment_creation)
+    comment_creation['author_id'] = str(current_user['_id'])
 
 
-@router.delete("/coment api/delete comment")
-async def delete_comment(comment: contract.CommentRequest,
+@router.delete("/comment api/delete comment")
+async def delete_comment(comment: contract.CommentDeletionRequest,
                          current_user: User = Depends(user_crud.get_current_user)):
 
     if current_user.role == 1 or str(current_user.dict()['_id']) == comment.author.id:
