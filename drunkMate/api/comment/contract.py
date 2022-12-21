@@ -30,7 +30,7 @@ class CommentRequest(BaseModel):
     cocktail_id: str
 
 
-class CommentDeletionRequest(CommentRequest):
+class CommentDeletionRequest(BaseModel):
     author: Author
 
 

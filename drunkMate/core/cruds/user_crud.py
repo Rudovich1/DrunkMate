@@ -62,5 +62,4 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     user = repository.get_user(login=token_data.login)
     if user is None:
         raise credentials_exception
-    print(user)
     return user
