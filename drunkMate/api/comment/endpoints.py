@@ -9,9 +9,10 @@ router = APIRouter()
 
 
 @router.post("/comment_api/post_comment")
-async def post_comment(data: contract.CPostComment):
+async def post_comment(data: contract.CPostComment,
+                       current_user: User = Depends(user_crud.get_current_user)):
 
-    await comment_crud.post_comment(data.cocktail_id, data.author_id, data.text, data.rating)
+    await comment_crud.post_comment(data.cocktail_id, current_user['_id'], data.text, data.rating)
 
 
 @router.delete("/comment api/delete comment")
