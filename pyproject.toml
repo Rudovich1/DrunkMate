@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "drunkmate"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.88.0"
+uvicorn = "^0.20.0"
+alembic = "^1.9.0"
+sqlmodel = "^0.0.8"
+toolz = "^0.12.0"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+pymongo = "^4.3.3"
+python-multipart = "^0.0.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
