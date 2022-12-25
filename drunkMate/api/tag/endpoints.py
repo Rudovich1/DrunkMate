@@ -1,5 +1,4 @@
-from http.client import HTTPException
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
 
 from drunkMate.api.tag import contract
@@ -12,6 +11,7 @@ router = APIRouter()
 @router.post("/tag_api/create_cocktail_tag")
 async def post_cocktail_tag(tag: contract.CPostCocktailTag,
                               current_user: User = Depends(user_crud.get_current_user)):
+    print(current_user.role)
     ans = await tag_crud.create_tag(tag.dict())
 
 
@@ -23,8 +23,8 @@ async def get_cocktail_tags():
 @router.delete("/tag_api/delete_cocktail_tag")
 async def delete_cocktail_tag(tag: contract.CDeleteCocktailTag,
                               current_user: User = Depends(user_crud.get_current_user)):
-    if current_user.role == 1:
-        tag_crud.delete_tag(tag, current_user['_id'])
+    if current_user['role'] == 1:
+        await tag_crud.delete_tag(tag.name, current_user['_id'])
     else:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -47,8 +47,8 @@ async def get_ingredient_tags():
 @router.delete("/tag_api/delete_ingredient_tag")
 async def delete_ingredient_tag(tag: contract.CDeleteIngredientTag,
                               current_user: User = Depends(user_crud.get_current_user)):
-    if current_user.role == 1:
-        tag_crud.delete_tag(tag, current_user['_id'], is_ingredient=True)
+    if current_user['role'] == 1:
+        await tag_crud.delete_tag(tag.name, current_user['_id'], is_ingredient=True)
     else:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
