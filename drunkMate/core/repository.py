@@ -97,6 +97,15 @@ def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
     return list(resp)
 
 
+def delete_tag(is_ingredient: bool, tag_name: str, db=drunkMate_db):
+    if is_ingredient:
+        collection = db['ingredient_tags']
+        collection.delete_one({'name': ObjectId(tag_name)})
+    else:
+        collection = db['cocktail_tags']
+        collection.delete_one({'name': ObjectId(tag_name)})
+
+
 # --------------------------------COMMENT--------------------------------
 
 
