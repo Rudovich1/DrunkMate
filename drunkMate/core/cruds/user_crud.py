@@ -69,4 +69,4 @@ async def create_admin():
     user1 = {'login': 'admin1', 'hashed_password': 'password1', 'name': 'name1', 'role': repository.Role.DRUNKMASTER.value}
     user2 = {'login': 'admin2', 'hashed_password': 'password2', 'name': 'name2', 'role': repository.Role.DRUNKMASTER.value}
     create_user(user1)
-    create_user(user1)
+    create_user(user2)
