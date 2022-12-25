@@ -11,7 +11,6 @@ router = APIRouter()
 @router.post("/tag_api/create_cocktail_tag")
 async def post_cocktail_tag(tag: contract.CPostCocktailTag,
                               current_user: User = Depends(user_crud.get_current_user)):
-    print(current_user.role)
     ans = await tag_crud.create_tag(tag.dict())
 
 
