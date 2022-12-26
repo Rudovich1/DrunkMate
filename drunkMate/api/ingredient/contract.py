@@ -36,3 +36,6 @@ class CPutIngredient(CPostIngredient):
 class CDeleteIngredient(BaseModel):
     name: str
     
+    
+class CGetIngredientsByTags(BaseModel):
+    tags: list[str]
