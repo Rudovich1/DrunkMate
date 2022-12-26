@@ -1,6 +1,6 @@
 from drunkMate.core import repository
 from bson.objectid import ObjectId
-
+from fastapi import HTTPException, status
 
 async def get_cocktail(cocktail_id: str):
     cocktail = repository.get_cocktail(cocktail_id)
@@ -35,6 +35,14 @@ async def post_cocktail(item: dict, author_id: str):
     
     for tag in item['tags']:
         repository.post_tag({'name': tag})
+    
+    for ingredient in item['ingredients']:
+        if (repository.get_ingredient(ingredient['name']) is None):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="There are no declared ingredients",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
     
     repository.post_cocktail(cocktail)
     
