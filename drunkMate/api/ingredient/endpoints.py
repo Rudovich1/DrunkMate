@@ -19,7 +19,7 @@ async def get_ingredients():
     resp = []
     for item in ingredients:
         resp.append(
-            contract.Ingredient(
+            contract.CGetIngredients(
                 name=item['name'],
                 tags=item['tags'],
                 description=item['description']
