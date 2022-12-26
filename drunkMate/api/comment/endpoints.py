@@ -11,7 +11,7 @@ router = APIRouter()
 @router.post("/comment_api/post_comment")
 async def post_comment(data: contract.CPostComment,
                        current_user: User = Depends(user_crud.get_current_user)):
-
+    print(current_user['_id'])
     await comment_crud.post_comment(data.cocktail_id, current_user['_id'], data.text, data.rating)
 
 

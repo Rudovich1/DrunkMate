@@ -134,8 +134,9 @@ def delete_tag(is_ingredient: bool, tag_name: str, db=drunkMate_db):
 
 def post_comment(author_id: str, text: str, rating: int, db=drunkMate_db):
     collection = db["comments"]
-    collection.insert_one({'author': ObjectId(author_id), 'text': text, 'rating': rating})
-
+    what = collection.insert_one({'author': ObjectId(author_id), 'text': text, 'rating': rating})
+    print(what.inserted_id)
+    return what.inserted_id
 
 def update_comment(comment_id: str, text: str, rating: int, db=drunkMate_db):
     collection = db['comments']

@@ -20,6 +20,7 @@ async def get_cocktail(cocktail_id: str):
 
 
 async def post_cocktail(item: dict, author_id: str):
+    print(item)
     cocktail = {
         'name': item['name'],
         'description': item['description'],
