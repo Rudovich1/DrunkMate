@@ -44,7 +44,7 @@ async def get_cocktails():
                                 'comments': cocktail['comments'],
                                 'parent_cocktails': cocktail['parent_cocktails'] })
         
-    return cocktails
+    return res_cocktails
 
 
 async def put_cocktail(cocktail_id: str, item: dict):
