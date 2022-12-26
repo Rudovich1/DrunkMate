@@ -8,7 +8,9 @@ async def post_tag(tag_data: dict, is_ingredient=False):
 async def get_tags(is_ingredient=False, ids: list=None):
     resp = repository.get_tags(is_ingredient=is_ingredient, ids=ids)
     print(resp)
-    names = list(map(lambda x: x['name'], resp))
+    names = []
+    for item in list(resp):
+        names.append(item['name'])
     print(names)
     return names
 
