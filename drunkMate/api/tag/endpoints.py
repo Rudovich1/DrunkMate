@@ -23,7 +23,7 @@ async def get_cocktail_tags():
 async def delete_cocktail_tag(tag: contract.CDeleteCocktailTag,
                               current_user: User = Depends(user_crud.get_current_user)):
     if current_user['role'] == 1:
-        await tag_crud.delete_tag(tag.name, current_user['_id'])
+        await tag_crud.delete_tag(tag.name, is_ingredient=False)
     else:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -47,7 +47,7 @@ async def get_ingredient_tags():
 async def delete_ingredient_tag(tag: contract.CDeleteIngredientTag,
                               current_user: User = Depends(user_crud.get_current_user)):
     if current_user['role'] == 1:
-        await tag_crud.delete_tag(tag.name, current_user['_id'], is_ingredient=True)
+        await tag_crud.delete_tag(tag.name, is_ingredient=True)
     else:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
