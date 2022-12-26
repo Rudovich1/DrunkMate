@@ -62,7 +62,7 @@ def update_cocktail(cocktail_id: str, item:dict, db=drunkMate_db):
 # --------------------------------INGREDIENT--------------------------------
 
 
-def put_ingredient(item: dict, db=drunkMate_db):
+def post_ingredient(item: dict, db=drunkMate_db):
     collection = db["ingredients"]
     resp = collection.find_one({'name': item['name']})
     if resp is None:

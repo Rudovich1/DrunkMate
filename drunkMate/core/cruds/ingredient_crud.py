@@ -3,7 +3,7 @@ from drunkMate.core.cruds import tag_crud
 
 
 async def post_ingredient(item: dict):
-    repository.put_ingredient(item)
+    repository.post_ingredient(item)
 
 
 async def get_ingredients():
