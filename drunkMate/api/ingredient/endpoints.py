@@ -53,3 +53,9 @@ async def delete_ingredient(delete_ingredient: contract.CDeleteIngredient,
             detail="Not enough rights",
             headers={"WWW-Authenticate": "Bearer"},
         )
+        
+        
+@router.get('/ingredient_api/get_ingredients_by_tags')
+async def get_ingredients_by_tags(tags: list[str]):
+    return await ingredient_crud.get_ingredients_by_tags(tags)
+
