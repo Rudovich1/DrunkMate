@@ -94,7 +94,7 @@ async def delete_cocktail(cocktail_id: str):
         )
     
     for comment in cocktail['comments']:
-        repository.delete_comment(comment['_id'])
+        repository.delete_comment(str(comment['_id']))
     
     repository.delete_cocktail(cocktail_id)
     
