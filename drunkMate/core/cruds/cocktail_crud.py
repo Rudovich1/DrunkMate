@@ -93,7 +93,7 @@ async def get_cocktails_by_tags(tags: list[str]):
     return res_cocktails
 
 
-async def get_cocktails_by_ingredient(ingredients: list[str]):
+async def get_cocktails_by_ingredients(ingredients: list[str]):
     
     cocktails = repository.get_cocktails()
     res_cocktails = []
