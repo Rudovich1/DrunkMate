@@ -50,3 +50,6 @@ async def delete_comment(comment_id: str, cocktail_id: str):
 
     repository.delete_comment(comment_id)
 
+
+async def get_comments(cocktail_id: str):
+    repository.get_comments(cocktail_id)

@@ -15,6 +15,11 @@ async def post_comment(data: contract.CPostComment,
     await comment_crud.post_comment(data.cocktail_id, str(current_user['_id']), data.text, data.rating)
 
 
+@router.post("/comment_api/get_comments")
+async def get_comments(cocktail_id: str):
+    await comment_crud.get_comments(cocktail_id)
+
+
 @router.delete("/comment api/delete comment")
 async def delete_comment(comment: contract.CDeleteComment,
                          current_user: User = Depends(user_crud.get_current_user)):

@@ -149,8 +149,19 @@ def update_comment(comment_id: str, text: str, rating: int, db=drunkMate_db):
 
 def get_comment(comment_id: str, db=drunkMate_db):
     collection = db['comments']
-
     return collection.find_one({'_id': ObjectId(comment_id)})
+
+
+def get_comments(cocktail_id: str, db=drunkMate_db):
+    collection = db['comments']
+    cocktail = get_cocktail(cocktail_id, db)
+    if cocktail is None:
+        return None
+    comments_ids = cocktail['comments']
+    collection = db['comments']
+    print(comments_ids)
+    comments = list(collection.find(filter={'_id': {"$in": comments_ids}}))
+    print(comments)
 
 
 def delete_comment(comment_id: str, db=drunkMate_db):
