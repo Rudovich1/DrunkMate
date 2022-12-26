@@ -67,9 +67,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
 async def create_admin():
     if repository.get_user('admin1') is None:
-        user1 = {'login': 'admin1', 'hashed_password': 'password1', 'name': 'name1', 'role': repository.Role.DRUNKMASTER.value}
-        create_user(user1)
+        user1 = {'login': 'admin1', 'password': 'password1', 'name': 'name1', 'role': repository.Role.DRUNKMASTER.value}
+        await create_user(user1)
         
     if repository.get_user('admin2') is None:
-        user2 = {'login': 'admin2', 'hashed_password': 'password2', 'name': 'name2', 'role': repository.Role.DRUNKMASTER.value}
-        create_user(user2)
+        user2 = {'login': 'admin2', 'password': 'password2', 'name': 'name2', 'role': repository.Role.DRUNKMASTER.value}
+        await create_user(user2)

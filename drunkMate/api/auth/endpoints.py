@@ -9,6 +9,11 @@ from drunkMate.core.cruds import user_crud
 router = APIRouter()
 
 
+@router.on_event("startup")
+async def startup():
+    await user_crud.create_admin()
+
+
 @router.post("/auth_api/registration", response_model=contract.Token)
 async def create_new_user(user_registration: contract.UserRegistration):
     if repository.get_user(user_registration.login):
@@ -17,6 +22,7 @@ async def create_new_user(user_registration: contract.UserRegistration):
             detail="User with this login already exists",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    user_registration['role'] = repository.Role.USER.value
     await user_crud.create_user(user_registration.dict())
     access_token = user_crud.create_access_token(data={"sub": user_registration.login})
     respond = contract.Token(access_token=access_token, token_type="bearer")

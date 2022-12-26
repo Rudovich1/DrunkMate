@@ -36,7 +36,7 @@ def add_user(item: dict, db=drunkMate_db):
         name=item["name"],
         hashed_password=item["hashed_password"],
         # image=,
-        role=Role.USER.value
+        role=item["role"]
     )
     users_collection = db["users"]
     users_collection.insert_one(usr.dict())
@@ -100,10 +100,9 @@ def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
 def delete_tag(is_ingredient: bool, tag_name: str, db=drunkMate_db):
     if is_ingredient:
         collection = db['ingredient_tags']
-        collection.delete_one({'name': ObjectId(tag_name)})
     else:
         collection = db['cocktail_tags']
-        collection.delete_one({'name': ObjectId(tag_name)})
+    collection.delete_one({'name': tag_name})
 
 
 # --------------------------------COMMENT--------------------------------
