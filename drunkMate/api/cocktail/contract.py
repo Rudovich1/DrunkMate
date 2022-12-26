@@ -8,6 +8,7 @@ class Ingredient(BaseModel):
     amount: int
     unit: int
 
+
 class Tag(BaseModel):
     id: str
     name: str
@@ -28,7 +29,7 @@ class ParentCocktail(BaseModel):
 
 class CPostCocktail(BaseModel):
     name: str = Field(min_length=1, max_length=170)
-    description: str = Field(max_length=500)
+    description: str = Field(max_length=1000)
     tags: List[str]
     #image: Optional[BLOB] = None
     recipe: str = Field(max_length=5000)

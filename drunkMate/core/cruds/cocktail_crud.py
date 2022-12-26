@@ -4,7 +4,8 @@ from bson.objectid import ObjectId
 
 async def get_cocktail(cocktail_id: str):
     cocktail = repository.get_cocktail(cocktail_id)
-
+    if cocktail is None:
+        return None
     return {'id': str(cocktail['_id']),
             'name': cocktail['name'],
             'description': cocktail['description'],
