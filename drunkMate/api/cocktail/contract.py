@@ -9,8 +9,10 @@ class CPostIngredient(BaseModel):
     unit: int
 
 
-class CGetIngredient(CPostIngredient):
+class CGetIngredient(BaseModel):
     name: str
+    amount: int
+    unit: int
 
 
 class Tag(BaseModel):
@@ -31,20 +33,29 @@ class ParentCocktail(BaseModel):
     name: str
 
 
-class CGetCocktail(BaseModel):
-    id: str
-    author: str
+class CPostCocktail(BaseModel):
     name: str = Field(min_length=1, max_length=170)
     description: str = Field(max_length=500)
-    rating: float | None = None
-    tags: List[Tag]
+    tags: List[str]
     #image: Optional[BLOB] = None
     recipe: str = Field(max_length=5000)
     strength: int
     ingredients: List[CGetIngredient]
-    comments: List[Comment]
-    parent_cocktail: ParentCocktail | None = None
+    parent_cocktails: List[ParentCocktail]
+    
 
+class CPutCocktail(CPostCocktail):
+    id: str
+    login: str
+
+
+class CGetCocktail(BaseModel):
+    id: str
+
+
+class CDeleteCocktail(BaseModel):
+    id: str
+    login: str
 
 class CPostCocktail(BaseModel):
     name: str = Field(min_length=1, max_length=170)

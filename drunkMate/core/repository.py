@@ -45,6 +45,11 @@ def add_user(item: dict, db=drunkMate_db):
 # --------------------------------COCKTAIL--------------------------------
 
 
+def post_cocktail(item: dict,  db=drunkMate_db):
+    collection = db['cocktails']
+    collection.insert_one(item)
+
+
 def get_cocktail(cocktail_id: str, db=drunkMate_db):
     try:
         cocktail_id = ObjectId(cocktail_id)
@@ -55,9 +60,18 @@ def get_cocktail(cocktail_id: str, db=drunkMate_db):
     return cocktail
 
 
-def update_cocktail(cocktail_id: str, item:dict, db=drunkMate_db):
+def get_cocktails(db=drunkMate_db):
+    return db['cocktails'].find()
+
+
+def put_cocktail(cocktail_id: str, item:dict, db=drunkMate_db):
     collection = db['cocktails']
     collection.update_one({'_id': ObjectId(cocktail_id)}, {'$set': item})
+    
+    
+def delete_cocktail(cocktail_id: str, db=drunkMate_db):
+    collection = db['cocktails']
+    collection.delete_one(filter={'_id': ObjectId(cocktail_id)})
 
 # --------------------------------INGREDIENT--------------------------------
 

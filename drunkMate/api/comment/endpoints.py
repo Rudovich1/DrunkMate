@@ -19,7 +19,7 @@ async def post_comment(data: contract.CPostComment,
 async def delete_comment(comment: contract.CDeleteComment,
                          current_user: User = Depends(user_crud.get_current_user)):
 
-    if current_user.role == 1 or str(current_user.dict()['login']) == comment.author_login:
+    if current_user.role == 1 or current_user.dict()['login'] == comment.author_login:
         await comment_crud.delete_comment(str(comment.dict()['_id']), comment.cocktail_id)
     else:
         raise HTTPException(

@@ -8,32 +8,47 @@ from drunkMate.api.user.contract import User
 router = APIRouter()
 
 
-@router.get("/cocktail_api/get_cocktail/{id}", response_model=contract.CGetCocktail)
-async def get_cocktail(id: str):
-    cocktail = await cocktail_crud.get_cocktail(id)
-    if cocktail is None:
+@router.post("/cocktail_api/post_cocktail")
+async def post_cocktail(cocktail: contract.CPostCocktail,
+                        current_user: User = Depends(user_crud.get_current_user)):
+    
+    await cocktail_crud.post_cocktail(cocktail.dict(), current_user['_id'])
+
+
+@router.put("/cocktail_api/put_cocktail")
+async def put_cocktail(cocktail: contract.CPutCocktail,
+                        current_user: User = Depends(user_crud.get_current_user)):
+
+    if current_user['role'] == 1 or current_user['login'] == cocktail.login:
+        await cocktail_crud.put_cocktail(cocktail['id'], cocktail)
+    else:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="No such resource",
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enough rights",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    respond = contract.CGetCocktail(
-        id=str(cocktail["_id"]),
-        author=str(cocktail["author"]),
-        name=cocktail["name"],
-        description=cocktail["description"],
-        rating=cocktail["rating"],
-        tags=list(map(lambda x: str(x), cocktail["tags"])),
-        # image: Optional[BLOB] = None
-        recipe=cocktail["recipe"],
-        strength=cocktail["strength"],
-        ingredients=cocktail["ingredients"],
-        comments=list(map(lambda x: str(x), cocktail["comments"])),
-        parent_cocktail=cocktail["parent_cocktail"]
-    )
 
 
-@router.post("/cocktail_api/get_cocktail/{id}")
-async def create_cocktail(cocktail_create: contract.CPostIngredient,
+@router.get("/cocktail_api/get_cocktail/{id}")
+async def get_cocktail(id: str):
+    return await cocktail_crud.get_cocktail(id)
+    
+    
+@router.get('/cocktail_api/get_cocktails')
+async def get_cocktails():
+    return await cocktail_crud.get_cocktails()
+    
+    
+@router.delete('/cocktail_api/delete_cocktail')
+async def delete_cocktail(cocktail: contract.CDeleteCocktail,
                           current_user: User = Depends(user_crud.get_current_user)):
-    pass
+    
+    if current_user['role'] == 1 or current_user['login'] == cocktail.login:
+        await cocktail_crud.delete_cocktail(cocktail.id)
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enough rights",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
