@@ -29,8 +29,8 @@ async def post_image(guid: str, file: UploadFile = File(...)):
         image_file_upload.write(file.file.read())
 
 
-@router.get("/image_api/get_image/{guid}")
-async def get_image(guid: str = "ebuchiy"):
+@router.get("/image_api/get_image/{guid='ebuchiy'}")
+async def get_image(guid: str):
     prefixed = [filename for filename in os.listdir(f"{get_project_root()}/images/") if filename.startswith(guid)]
     if len(prefixed) > 0:
         return FileResponse(f"{str(get_project_root())}/images/{prefixed[0]}")

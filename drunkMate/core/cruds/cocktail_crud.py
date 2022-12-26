@@ -2,21 +2,20 @@ from drunkMate.core import repository
 from bson.objectid import ObjectId
 
 
-
 async def get_cocktail(cocktail_id: str):
     cocktail = repository.get_cocktail(cocktail_id)
 
-    return {  'id': str(cocktail['_id']),
-                'name': cocktail['name'],
-                'description': cocktail['description'],
-                'rating': cocktail['rating'],
-                'tags': cocktail['tags'],
-                'recipe': cocktail['recipe'],
-                'author': str(cocktail['author']),
-                'strength': cocktail['strength'],
-                'ingredients': cocktail['ingredients'],
-                'comments': cocktail['comments'],
-                'parent_cocktails': cocktail['parent_cocktails'] }
+    return {'id': str(cocktail['_id']),
+            'name': cocktail['name'],
+            'description': cocktail['description'],
+            'rating': cocktail['rating'],
+            'tags': cocktail['tags'],
+            'recipe': cocktail['recipe'],
+            'author': str(cocktail['author']),
+            'strength': cocktail['strength'],
+            'ingredients': list(map(lambda x: str(x), cocktail['ingredients'])),
+            'comments': list(map(lambda x: str(x), cocktail['comments'])),
+            'parent_cocktails': cocktail['parent_cocktails']}
 
 
 async def post_cocktail(item: dict, author_id: str):

@@ -17,7 +17,7 @@ async def post_cocktail(cocktail: contract.CPostCocktail,
 
 @router.put("/cocktail_api/put_cocktail")
 async def put_cocktail(cocktail: contract.CPutCocktail,
-                        current_user: User = Depends(user_crud.get_current_user)):
+                       current_user: User = Depends(user_crud.get_current_user)):
 
     if current_user['role'] == 1 or current_user['login'] == cocktail.login:
         await cocktail_crud.put_cocktail(cocktail.id, cocktail.dict())

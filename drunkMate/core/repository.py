@@ -64,8 +64,9 @@ def get_cocktails(db=drunkMate_db):
     return db['cocktails'].find()
 
 
-def put_cocktail(cocktail_id: str, item:dict, db=drunkMate_db):
+def put_cocktail(cocktail_id: str, item: dict, db=drunkMate_db):
     collection = db['cocktails']
+    print(item)
     collection.update_one({'_id': ObjectId(cocktail_id)}, {'$set': item})
     
     
@@ -136,6 +137,7 @@ def post_comment(author_id: str, text: str, rating: int, db=drunkMate_db):
     collection = db["comments"]
     elem = collection.insert_one({'author': ObjectId(author_id), 'text': text, 'rating': rating})
     return elem.inserted_id
+
 
 def update_comment(comment_id: str, text: str, rating: int, db=drunkMate_db):
     collection = db['comments']
