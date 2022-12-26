@@ -8,7 +8,6 @@ class CPostComment(BaseModel):
     text: str
     rating: int
     cocktail_id: str
-    author_id: str
 
 
 class CDeleteComment(BaseModel):
