@@ -19,7 +19,7 @@ async def post_comment(cocktail_id: str, author_id: str, text: str, rating: int)
     comments = cocktail['comments']
 
     for comment in comments:
-        comment = repository.get_comment(comment)
+        comment = repository.get_comment(str(comment))
         author = comment['author']
         if str(author) == author_id:
             new_rating = (cocktail['rating']*len(cocktail['comments'])-comment['rating']+rating)/len(cocktail['comments'])
