@@ -97,6 +97,7 @@ def delete_ingredient(ingredient_name: str, db=drunkMate_db):
     collection = db["ingredients"]
     collection.delete_one({'name': ingredient_name})
     
+    
 # --------------------------------TAG--------------------------------
 
 
