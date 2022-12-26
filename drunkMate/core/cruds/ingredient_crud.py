@@ -13,7 +13,6 @@ async def get_ingredients():
     ingredients = repository.get_ingredients()
     resp = []
     for item in ingredients:
-        #tags = list(await tag_crud.get_tags(is_ingredient=True, ids=list(item['tags'])))
         item = {'name': item['name'], 'description': item['description'], 'tags': item['tags']}
         resp.append(item)
     return resp

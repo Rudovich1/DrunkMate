@@ -34,7 +34,7 @@ class CPostCocktail(BaseModel):
     recipe: str = Field(max_length=5000)
     strength: int
     ingredients: List[Ingredient]
-    parent_cocktails: List[ParentCocktail]
+    parent_cocktails: List[str]
     
 
 class CPutCocktail(CPostCocktail):
