@@ -1,7 +1,16 @@
 from drunkMate.core import repository
+from fastapi import HTTPException, status
 
 
 async def post_tag(tag_data: dict, is_ingredient=False):
+    
+    if repository.get_tag(is_ingredient, tag_data['name']) is not None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="The tag already exists",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
     return repository.post_tag(tag_data, is_ingredient=is_ingredient)  
 
 
@@ -14,6 +23,13 @@ async def get_tags(is_ingredient=False, ids: list=None):
 
 
 async def delete_tag(tag_name: str, is_ingredient=False):
+    
+    if repository.get_tag(is_ingredient, tag_name) is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_BAD_REQUEST,
+            detail="The tag does not exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
     if is_ingredient:
         ings = repository.get_ingredients()

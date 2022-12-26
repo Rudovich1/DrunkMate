@@ -131,6 +131,15 @@ def delete_tag(is_ingredient: bool, tag_name: str, db=drunkMate_db):
     else:
         collection = db['cocktail_tags']
     collection.delete_one({'name': tag_name})
+    
+    
+def get_tag(is_ingredient: bool, name: str, db=drunkMate_db):
+    if is_ingredient:
+        collection = db["ingredient_tags"]
+    else:
+        collection = db["cocktail_tags"]
+        
+    return collection.find_one({'name': name})
 
 
 # --------------------------------COMMENT--------------------------------
