@@ -22,6 +22,9 @@ async def get_ingredients():
 
 
 async def put_ingredient(item: dict):
+    for tag in item['tags']:
+        repository.post_tag({'name': tag}, is_ingredient=True)
+        
     repository.put_ingredient(item['old_name'], {'name': item['name'], 'description': item['description'], 'tags': item['tags']})
     
 
