@@ -19,7 +19,7 @@ async def delete_tag(tag_name: str, is_ingredient=False):
         ings = repository.get_ingredients()
         for ing in ings:
             tags = ing['tags']
-            if tags.find(tag_name):
+            if tag_name in tags:
                 tags.remove(tag_name)
                 repository.put_ingredient(ing['name'], {'tags': tags})
     
