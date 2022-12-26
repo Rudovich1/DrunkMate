@@ -1,7 +1,7 @@
 import toolz
 from fastapi import FastAPI
 
-from . import auth, user, cocktail, tag, ingredient, comment, image
+from drunkMate.api import auth, user, cocktail, tag, ingredient, comment, image
 
 
 def create_app() -> FastAPI:
