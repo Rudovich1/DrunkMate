@@ -39,7 +39,6 @@ class CPostCocktail(BaseModel):
 
 class CPutCocktail(CPostCocktail):
     id: str
-    login: str
 
 
 class CGetCocktail(BaseModel):
