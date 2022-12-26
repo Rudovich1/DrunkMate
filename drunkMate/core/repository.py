@@ -71,6 +71,7 @@ def post_ingredient(item: dict, db=drunkMate_db):
 
 def get_ingredients(db=drunkMate_db):
     collection = db["ingredients"]
+    print(list(collection.find()))
     return list(collection.find())
 
 
