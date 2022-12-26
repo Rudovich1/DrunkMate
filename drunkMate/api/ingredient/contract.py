@@ -16,7 +16,7 @@ class Ingredient(IngredientBase):
 
 
 class IngredientResponse(Ingredient):
-    tags: List[contract.Tag]
+    tags: List[contract.TagBase]
 
 
 class IngredientRequest(IngredientBase):
