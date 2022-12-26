@@ -96,7 +96,11 @@ def put_ingredient(old_name: str, item: dict, db=drunkMate_db):
 def delete_ingredient(ingredient_name: str, db=drunkMate_db):
     collection = db["ingredients"]
     collection.delete_one({'name': ingredient_name})
-    
+
+
+def get_ingredient(name: str, db=drunkMate_db):
+    collection = db["ingredients"]
+    return collection.find_one({'name': name})
     
 # --------------------------------TAG--------------------------------
 
