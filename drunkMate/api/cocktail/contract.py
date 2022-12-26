@@ -49,3 +49,11 @@ class CDeleteCocktail(BaseModel):
     id: str
     login: str
 
+
+class CGetCocktailsByTags(BaseModel):
+    tags: List[str]
+    
+    
+class CGetCocktailsByIngredients(BaseModel):
+    ingredients: List[str]
+    
