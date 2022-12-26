@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from starlette import status
 
 from drunkMate.core.cruds import cocktail_crud, user_crud
@@ -53,11 +53,11 @@ async def delete_cocktail(cocktail: contract.CDeleteCocktail,
         )
 
 
-@router.get('/cocktail_api/get_cocktails_by_tags')
+@router.post('/cocktail_api/get_cocktails_by_tags')
 async def get_cocktails_by_tags(tags: contract.CGetCocktailsByTags):
     return await cocktail_crud.get_cocktails_by_tags(tags.tags)
 
 
-@router.get('/cocktail_api/get_cocktails_by_ingredients')
+@router.post('/cocktail_api/get_cocktails_by_ingredients')
 async def get_cocktails_by_ingredients(ingredients: contract.CGetCocktailsByIngredients):
     return await cocktail_crud.get_cocktails_by_ingredients(ingredients.ingredients)

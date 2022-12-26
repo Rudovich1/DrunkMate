@@ -88,7 +88,7 @@ async def get_cocktails_by_tags(tags: list[str]):
             if tag not in cocktail['tags']:
                 break
         else:
-            res_cocktails.append(cocktail['_id'])
+            res_cocktails.append(str(cocktail['_id']))
                 
     return res_cocktails
 
@@ -107,6 +107,6 @@ async def get_cocktails_by_ingredients(ingredients: list[str]):
             if ingredient not in cocktail_ingredients:
                 break
         else:
-            res_cocktails.append(cocktail['_id'])
+            res_cocktails.append(str(cocktail['_id']))
                 
     return res_cocktails
