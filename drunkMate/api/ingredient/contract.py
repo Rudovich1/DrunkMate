@@ -15,8 +15,8 @@ class Ingredient(IngredientBase):
     id: str
 
 
-class IngredientResponse(Ingredient):
-    tags: List[contract.TagBase]
+class CGetIngredients(IngredientBase):
+    tags: List[str]
 
 
 class IngredientRequest(IngredientBase):
