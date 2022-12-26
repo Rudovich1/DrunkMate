@@ -26,7 +26,7 @@ class IngredientRequest(IngredientBase):
 class CPostIngredient(BaseModel):
     name: str
     description: str = Field(max_length=500)
-    tags: list[TagBase]
+    tags: list[str]
     
     
 class CPutIngredient(CPostIngredient):

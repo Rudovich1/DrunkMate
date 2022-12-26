@@ -3,6 +3,9 @@ from drunkMate.core.cruds import tag_crud
 
 
 async def post_ingredient(item: dict):
+    for tag in item['tags']:
+        repository.post_tag({'name': tag}, is_ingredient=True)
+        
     repository.post_ingredient(item)
 
 
