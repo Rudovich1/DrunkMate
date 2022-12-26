@@ -16,7 +16,6 @@ async def post_image(guid: str, file: UploadFile = File(...)):
     correct_formats = ['png', 'jpg', 'jpeg']
     try:
         file_format = file.filename.split('.')[-1]
-        print(file_format)
         if file_format not in correct_formats:
             raise Exception
     except:
