@@ -22,5 +22,13 @@ async def delete_tag(tag_name: str, is_ingredient=False):
             if tag_name in tags:
                 tags.remove(tag_name)
                 repository.put_ingredient(ing['name'], {'tags': tags})
+    else:
+        cocks = repository.get_cocktails()
+        for cock in cocks:
+            tags = cock['tags']
+            if tag_name in tags:
+                tags.remove(tag_name)
+                repository.put_cocktail(str(cock['_id']), {'tags': tags})
+    
     
     repository.delete_tag(is_ingredient, tag_name)
