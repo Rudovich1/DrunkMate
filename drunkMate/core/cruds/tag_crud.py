@@ -15,4 +15,13 @@ async def get_tags(is_ingredient=False, ids: list=None):
     return names
 
 async def delete_tag(tag_name: str, is_ingredient=False):
+    
+    if is_ingredient:
+        ings = repository.get_ingredients()
+        for ing in ings:
+            tags = ing['tags']
+            if tags.find(tag_name):
+                tags.remove(tag_name)
+                repository.put_ingredient(ing['name'], {'tags': tags})
+    
     repository.delete_tag(is_ingredient, tag_name)
