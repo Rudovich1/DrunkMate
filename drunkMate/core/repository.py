@@ -66,7 +66,6 @@ def get_cocktails(db=drunkMate_db):
 
 def put_cocktail(cocktail_id: str, item: dict, db=drunkMate_db):
     collection = db['cocktails']
-    print(item)
     collection.update_one({'_id': ObjectId(cocktail_id)}, {'$set': item})
     
     
@@ -86,7 +85,6 @@ def post_ingredient(item: dict, db=drunkMate_db):
 
 def get_ingredients(db=drunkMate_db):
     collection = db["ingredients"]
-    print(list(collection.find()))
     return list(collection.find())
 
 

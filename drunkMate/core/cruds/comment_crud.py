@@ -28,15 +28,12 @@ async def post_comment(cocktail_id: str, author_id: str, text: str, rating: int)
             return
 
     comment_id = repository.post_comment(author_id, text, rating)
-    print(comment_id)
 
     if cocktail['rating'] is None:
         new_rating = rating
     else:
         new_rating = (cocktail['rating'] * len(cocktail['comments']) + rating)/(len(cocktail['comments']) + 1)
-    print(cocktail['comments'])
     cocktail['comments'].append(ObjectId(comment_id))
-    print(cocktail['comments'])
     repository.put_cocktail(cocktail_id, {'rating': new_rating, 'comments': cocktail['comments']})
 
 
