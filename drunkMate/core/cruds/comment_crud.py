@@ -12,7 +12,7 @@ async def post_comment(cocktail_id: str, author_id: str, text: str, rating: int)
     if cocktail is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Cocktail with this id not exists",
+            detail="The cocktail does not exist",
             headers={"WWW-Authenticate": "Bearer"},
         )
 
@@ -40,6 +40,19 @@ async def post_comment(cocktail_id: str, author_id: str, text: str, rating: int)
 async def delete_comment(comment_id: str, cocktail_id: str):
     cocktail = repository.get_cocktail(cocktail_id)
     comment = repository.get_comment(comment_id)
+    
+    if cocktail is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The cocktail does not exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    if comment is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The comment does not exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
 
     if len(cocktail['comments']) == 1:
         cocktail['rating'] = None

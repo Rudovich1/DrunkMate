@@ -54,7 +54,7 @@ def get_cocktail(cocktail_id: str, db=drunkMate_db):
     try:
         cocktail_id = ObjectId(cocktail_id)
         cocktail_collection = db["cocktails"]
-        cocktail = cocktail_collection.find_one({"_id": cocktail_id})
+        cocktail = cocktail_collection.find_one({"_id": cocktail_id}) # <--  LOL
     except:
         cocktail = None
     return cocktail
@@ -66,7 +66,7 @@ def get_cocktails(db=drunkMate_db):
 
 def put_cocktail(cocktail_id: str, item: dict, db=drunkMate_db):
     collection = db['cocktails']
-    collection.update_one({'_id': ObjectId(cocktail_id)}, {'$set': item})
+    return collection.update_one({'_id': ObjectId(cocktail_id)}, {'$set': item})
     
     
 def delete_cocktail(cocktail_id: str, db=drunkMate_db):

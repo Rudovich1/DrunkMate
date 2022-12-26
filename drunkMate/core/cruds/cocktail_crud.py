@@ -33,9 +33,6 @@ async def post_cocktail(item: dict, author_id: str):
         'parent_cocktails': item['parent_cocktails'] 
     }
     
-    for tag in item['tags']:
-        repository.post_tag({'name': tag})
-    
     for ingredient in item['ingredients']:
         if (repository.get_ingredient(ingredient['name']) is None):
             raise HTTPException(
@@ -45,6 +42,9 @@ async def post_cocktail(item: dict, author_id: str):
             )
     
     repository.post_cocktail(cocktail)
+    
+    for tag in item['tags']:
+        repository.post_tag({'name': tag})
     
     
 async def get_cocktails():
@@ -71,15 +71,27 @@ async def put_cocktail(cocktail_id: str, item: dict):
             'ingredients': item['ingredients'],
             'parent_cocktails': item['parent_cocktails'] }
     
-    repository.put_cocktail(cocktail_id, item)
+    if repository.put_cocktail(cocktail_id, item) is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The cocktail does not exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
     for tag in item['tags']:
         repository.post_tag({'name': tag})
-    
+
 
 async def delete_cocktail(cocktail_id: str):
     
     cocktail = repository.get_cocktail(cocktail_id)
+    
+    if cocktail is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The cocktail does not exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
     for comment in cocktail['comments']:
         repository.delete_comment(comment['_id'])
