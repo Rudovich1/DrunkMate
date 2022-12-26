@@ -103,7 +103,7 @@ def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
         resp = collection.find()
     else:
         resp = collection.find({"_id": {"$in": ids}})
-    return list(resp)
+    return resp
 
 
 def delete_tag(is_ingredient: bool, tag_name: str, db=drunkMate_db):
