@@ -13,8 +13,8 @@ async def get_ingredients():
     return resp
 
 
-async def put_ingredient(ingredient_name: str, item: dict):
-    repository.put_ingredient(ingredient_name, item)
+async def put_ingredient(item: dict):
+    repository.put_ingredient(item['old_name'], {'name': item['name'], 'description': item['description']})
     
 
 async def delete_ingredient(ingredient_name: str):

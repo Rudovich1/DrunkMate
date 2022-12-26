@@ -27,8 +27,10 @@ class CPostIngredient(BaseModel):
     description: str = Field(max_length=500)
     
     
-class CPutIngredient(BaseModel):
+class CPutIngredient(CPostIngredient):
+    old_name: str
+    
+
+class CDeleteIngredient(BaseModel):
     name: str
-    new_name: str
-    description: str = Field(max_length=500)
     

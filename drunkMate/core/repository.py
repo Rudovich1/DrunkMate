@@ -74,18 +74,14 @@ def get_ingredients(db=drunkMate_db):
     return list(collection.find())
 
 
-def put_ingredient(ingredient_name: str, item: dict, db=drunkMate_db):
+def put_ingredient(old_name: str, item: dict, db=drunkMate_db):
     collection = db["ingredients"]
-    resp = collection.find_one({'name': ingredient_name})
-    if resp is not None:
-        collection.update_one(filter={'name': ingredient_name}, update={'$set': item})
+    collection.update_one(filter={'name': old_name}, update={'$set': item})
         
 
 def delete_ingredient(ingredient_name: str, db=drunkMate_db):
     collection = db["ingredients"]
-    resp = collection.find_one({'name': ingredient_name})
-    if resp is not None:
-        collection.delete_one({'name': ingredient_name})
+    collection.delete_one({'name': ingredient_name})
     
 # --------------------------------TAG--------------------------------
 
