@@ -3,17 +3,10 @@ from bson.objectid import ObjectId
 from typing import List
 
 
-class CPostIngredient(BaseModel):
-    id: str
-    amount: int
-    unit: int
-
-
-class CGetIngredient(BaseModel):
+class Ingredient(BaseModel):
     name: str
     amount: int
     unit: int
-
 
 class Tag(BaseModel):
     id: str
@@ -40,7 +33,7 @@ class CPostCocktail(BaseModel):
     #image: Optional[BLOB] = None
     recipe: str = Field(max_length=5000)
     strength: int
-    ingredients: List[CGetIngredient]
+    ingredients: List[Ingredient]
     parent_cocktails: List[ParentCocktail]
     
 
@@ -57,11 +50,3 @@ class CDeleteCocktail(BaseModel):
     id: str
     login: str
 
-class CPostCocktail(BaseModel):
-    name: str = Field(min_length=1, max_length=170)
-    description: str | None = Field(max_length=500)
-    tags: List[str]
-    recipe: str = Field(max_length=5000)
-    strength: int
-    ingredients: List[CPostIngredient]
-    parent_cocktail: ParentCocktail | None = None
