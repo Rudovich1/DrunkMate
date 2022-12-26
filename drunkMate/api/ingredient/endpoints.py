@@ -18,7 +18,6 @@ async def get_ingredients():
     ingredients = list(await ingredient_crud.get_ingredients())
     resp = []
     for item in ingredients:
-        print(item['name'],item['tags'],item['description'], sep='\n')
         resp.append(
             contract.CGetIngredients(
                 name=item['name'],
@@ -27,6 +26,7 @@ async def get_ingredients():
             )
         )
     return resp
+
 
 @router.put("/ingredient_api/put_ingredient")
 async def put_ingredient(put_ingredient: contract.CPutIngredient,

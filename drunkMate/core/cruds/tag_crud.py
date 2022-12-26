@@ -6,13 +6,12 @@ async def post_tag(tag_data: dict, is_ingredient=False):
 
 
 async def get_tags(is_ingredient=False, ids: list=None):
-    resp = repository.get_tags(is_ingredient=is_ingredient, ids=ids)
-    print(list(resp))
+    resp = list(repository.get_tags(is_ingredient=is_ingredient, ids=ids))
     names = []
-    for item in list(resp):
+    for item in resp:
         names.append(item['name'])
-    print(names)
     return names
+
 
 async def delete_tag(tag_name: str, is_ingredient=False):
     

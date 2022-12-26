@@ -11,13 +11,13 @@ async def post_ingredient(item: dict):
 
 async def get_ingredients():
     ingredients = repository.get_ingredients()
-    print(ingredients)
     resp = []
+    print(ingredients)
     for item in ingredients:
-        print(tag_crud.get_tags(is_ingredient=True, ids=list(map(lambda x: str(x), item['tags']))))
-        item['tags'] = list(await tag_crud.get_tags(is_ingredient=True, ids=list(item['tags'])))
+        #tags = list(await tag_crud.get_tags(is_ingredient=True, ids=list(item['tags'])))
         item = {'name': item['name'], 'description': item['description'], 'tags': item['tags']}
         resp.append(item)
+    print(resp)
     return resp
 
 
