@@ -6,7 +6,17 @@ from bson.objectid import ObjectId
 async def get_cocktail(cocktail_id: str):
     cocktail = repository.get_cocktail(cocktail_id)
 
-    return cocktail
+    return {  'id': str(cocktail['_id']),
+                'name': cocktail['name'],
+                'description': cocktail['description'],
+                'rating': cocktail['rating'],
+                'tags': cocktail['tags'],
+                'recipe': cocktail['recipe'],
+                'author': str(cocktail['author']),
+                'strength': cocktail['strength'],
+                'ingredients': cocktail['ingredients'],
+                'comments': cocktail['comments'],
+                'parent_cocktails': cocktail['parent_cocktails'] }
 
 
 async def post_cocktail(item: dict, author_id: str):
@@ -35,15 +45,10 @@ async def get_cocktails():
     for cocktail in cocktails:
         res_cocktails.append({  'id': str(cocktail['_id']),
                                 'name': cocktail['name'],
-                                'description': cocktail['description'],
                                 'rating': cocktail['rating'],
                                 'tags': cocktail['tags'],
-                                'recipe': cocktail['recipe'],
                                 'author': str(cocktail['author']),
-                                'strength': cocktail['strength'],
-                                'ingredients': cocktail['ingredients'],
-                                'comments': cocktail['comments'],
-                                'parent_cocktails': cocktail['parent_cocktails'] })
+                                'strength': cocktail['strength']})
         
     return res_cocktails
 
