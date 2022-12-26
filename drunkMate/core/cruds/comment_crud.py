@@ -24,7 +24,7 @@ async def post_comment(cocktail_id: str, author_id: str, text: str, rating: int)
         if str(author) == author_id:
             new_rating = (cocktail['rating']*len(cocktail['comments'])-comment['rating']+rating)/len(cocktail['comments'])
             repository.put_cocktail(cocktail_id, {'rating': new_rating})
-            repository.update_comment(str(comment['_id']), text, rating)
+            repository.put_comment(str(comment['_id']), text, rating)
             return
 
     comment_id = repository.post_comment(author_id, text, rating)
@@ -33,6 +33,7 @@ async def post_comment(cocktail_id: str, author_id: str, text: str, rating: int)
         new_rating = rating
     else:
         new_rating = (cocktail['rating'] * len(cocktail['comments']) + rating)/(len(cocktail['comments']) + 1)
+        
     cocktail['comments'].append(ObjectId(comment_id))
     repository.put_cocktail(cocktail_id, {'rating': new_rating, 'comments': cocktail['comments']})
 
@@ -61,6 +62,7 @@ async def delete_comment(comment_id: str, cocktail_id: str):
 
     cocktail['comments'] = cocktail['comments'].remove(ObjectId(comment_id))
 
+    repository.put_cocktail(cocktail_id, {'rating': cocktail['rating'], 'comments': cocktail['comments']})
     repository.delete_comment(comment_id)
 
 

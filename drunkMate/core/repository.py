@@ -142,7 +142,7 @@ def post_comment(author_id: str, text: str, rating: int, db=drunkMate_db):
     return elem.inserted_id
 
 
-def update_comment(comment_id: str, text: str, rating: int, db=drunkMate_db):
+def put_comment(comment_id: str, text: str, rating: int, db=drunkMate_db):
     collection = db['comments']
     collection.update_one({'_id': comment_id}, {'$set': {'text': text, 'rating': rating}})
 
