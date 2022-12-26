@@ -33,7 +33,8 @@ async def get_cocktails():
     cocktails = list(repository.get_cocktails())
     res_cocktails = []
     for cocktail in cocktails:
-        res_cocktails.append({'name': cocktail['name'],
+        res_cocktails.append({  'id': str(cocktail['_id']),
+                                'name': cocktail['name'],
                                 'description': cocktail['description'],
                                 'rating': cocktail['rating'],
                                 'tags': cocktail['tags'],
