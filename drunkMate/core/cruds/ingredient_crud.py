@@ -14,7 +14,7 @@ async def get_ingredients():
 
 
 async def put_ingredient(item: dict):
-    repository.put_ingredient(item['old_name'], {'name': item['name'], 'description': item['description']})
+    repository.put_ingredient(item['old_name'], {'name': item['name'], 'description': item['description'], 'tags': item['tags']})
     
 
 async def delete_ingredient(ingredient_name: str):

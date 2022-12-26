@@ -2,6 +2,7 @@ from pydantic import BaseModel, Field
 from typing import List
 
 from drunkMate.api.tag import contract
+from drunkMate.api.tag.contract import TagBase
 
 
 class IngredientBase(BaseModel):
@@ -25,6 +26,7 @@ class IngredientRequest(IngredientBase):
 class CPostIngredient(BaseModel):
     name: str
     description: str = Field(max_length=500)
+    tags: list[TagBase]
     
     
 class CPutIngredient(CPostIngredient):
