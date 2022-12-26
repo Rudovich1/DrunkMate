@@ -38,7 +38,7 @@ async def get_cocktails():
                                 'rating': cocktail['rating'],
                                 'tags': cocktail['tags'],
                                 'recipe': cocktail['recipe'],
-                                'author': str(cocktail['author_id']),
+                                'author': str(cocktail['author']),
                                 'strength': cocktail['strength'],
                                 'ingredients': cocktail['ingredients'],
                                 'comments': cocktail['comments'],
