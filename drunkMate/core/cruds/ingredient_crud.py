@@ -12,7 +12,7 @@ async def get_ingredients():
     resp = []
     for item in ingredients:
         print(tag_crud.get_tags(is_ingredient=True, ids=list(map(lambda x: str(x), item['tags']))))
-        item['tags'] = list(await tag_crud.get_tags(is_ingredient=True, ids=list(map(lambda x: str(x), item['tags']))))
+        item['tags'] = list(await tag_crud.get_tags(is_ingredient=True, ids=list(item['tags'])))
         item = {'name': item['name'], 'description': item['description'], 'tags': item['tags']}
         resp.append(item)
     return resp
