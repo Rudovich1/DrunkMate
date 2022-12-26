@@ -62,7 +62,7 @@ def update_cocktail(cocktail_id: str, item:dict, db=drunkMate_db):
 # --------------------------------INGREDIENT--------------------------------
 
 
-def create_ingredient(item: dict, db=drunkMate_db):
+def put_ingredient(item: dict, db=drunkMate_db):
     collection = db["ingredients"]
     resp = collection.find_one({'name': item['name']})
     if resp is None:
@@ -74,10 +74,23 @@ def get_ingredients(db=drunkMate_db):
     return list(collection.find())
 
 
+def put_ingredient(ingredient_name: str, item: dict, db=drunkMate_db):
+    collection = db["ingredients"]
+    resp = collection.find_one({'name': ingredient_name})
+    if resp is not None:
+        collection.update_one(filter={'name': ingredient_name}, update={'$set': item})
+        
+
+def delete_ingredient(ingredient_name: str, db=drunkMate_db):
+    collection = db["ingredients"]
+    resp = collection.find_one({'name': ingredient_name})
+    if resp is not None:
+        collection.delete_one({'name': ingredient_name})
+    
 # --------------------------------TAG--------------------------------
 
 
-def create_tag(item: dict, is_ingredient: bool, db=drunkMate_db):
+def post_tag(item: dict, is_ingredient: bool, db=drunkMate_db):
     if is_ingredient:
         collection = db["ingredient_tags"]
     else:

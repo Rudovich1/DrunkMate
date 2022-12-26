@@ -11,7 +11,7 @@ router = APIRouter()
 @router.post("/tag_api/create_cocktail_tag")
 async def post_cocktail_tag(tag: contract.CPostCocktailTag,
                               current_user: User = Depends(user_crud.get_current_user)):
-    ans = await tag_crud.create_tag(tag.dict())
+    ans = await tag_crud.post_tag(tag.dict())
 
 
 @router.get("/tag_api/get_cocktail_tags")
@@ -35,7 +35,7 @@ async def delete_cocktail_tag(tag: contract.CDeleteCocktailTag,
 @router.post("/tag_api/create_ingredient_tag")
 async def post_ingredient_tag(tag: contract.CPostIngredientTag,
                                 current_user: User = Depends(user_crud.get_current_user)):
-    await tag_crud.create_tag(tag.dict(), is_ingredient=True)
+    await tag_crud.post_tag(tag.dict(), is_ingredient=True)
 
 
 @router.get("/tag_api/get_ingredient_tags")

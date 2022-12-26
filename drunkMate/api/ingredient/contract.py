@@ -20,3 +20,15 @@ class IngredientResponse(Ingredient):
 
 class IngredientRequest(IngredientBase):
     tags: List[str]
+
+
+class CPostIngredient(BaseModel):
+    name: str
+    description: str = Field(max_length=500)
+    
+    
+class CPutIngredient(BaseModel):
+    name: str
+    new_name: str
+    description: str = Field(max_length=500)
+    
