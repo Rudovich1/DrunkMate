@@ -101,7 +101,7 @@ def delete_ingredient(ingredient_name: str, db=drunkMate_db):
 # --------------------------------TAG--------------------------------
 
 
-def post_tag(item: dict, is_ingredient: bool, db=drunkMate_db):
+def post_tag(item: dict, is_ingredient: bool = False, db=drunkMate_db):
     if is_ingredient:
         collection = db["ingredient_tags"]
     else:
