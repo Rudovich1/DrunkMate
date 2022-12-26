@@ -20,7 +20,7 @@ async def put_cocktail(cocktail: contract.CPutCocktail,
                         current_user: User = Depends(user_crud.get_current_user)):
 
     if current_user['role'] == 1 or current_user['login'] == cocktail.login:
-        await cocktail_crud.put_cocktail(cocktail.id, cocktail)
+        await cocktail_crud.put_cocktail(cocktail.id, cocktail.dict())
     else:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
