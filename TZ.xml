@@ -1,0 +1,105 @@
+<ISSPECS>
+  <DESCRIPTION>
+    <TITLE>DrunkMate</TITLE>
+    <SUBJ>Конструктор коктейлей</SUBJ>
+  </DESCRIPTION>
+  
+  
+  <DATA>
+    <ENTITY ent_id="user">
+      <PROPERTY>id</PROPERTY>
+      <PROPERTY>login</PROPERTY>
+      <PROPERTY>password</PROPERTY>
+      <PROPERTY>name</PROPERTY>
+      <PROPERTY>image</PROPERTY>
+      <PROPERTY>role</PROPERTY>
+    </ENTITY>
+    <ENTITY ent_id="ingredient_tag">
+      <PROPERTY>id</PROPERTY>
+      <PROPERTY>name</PROPERTY>
+    </ENTITY>
+    <ENTITY ent_id="cocktail_tag">
+      <PROPERTY>id</PROPERTY>
+      <PROPERTY>name</PROPERTY>
+    </ENTITY>
+    <ENTITY ent_id="ingredient">
+      <PROPERTY>id</PROPERTY>
+      <PROPERTY>name</PROPERTY>
+      <PROPERTY>image</PROPERTY>
+      <PROPERTY>tags</PROPERTY>
+      <PROPERTY>description</PROPERTY>
+    </ENTITY>
+    <ENTITY ent_id="comment">
+      <PROPERTY>id</PROPERTY>
+      <PROPERTY>author</PROPERTY>
+      <PROPERTY>text</PROPERTY>
+      <PROPERTY>rating</PROPERTY>
+    </ENTITY>
+    <ENTITY ent_id="cocktail">
+      <PROPERTY>id</PROPERTY>
+      <PROPERTY>name</PROPERTY>
+      <PROPERTY>description</PROPERTY>
+      <PROPERTY>rating</PROPERTY>
+      <PROPERTY>tags</PROPERTY>
+      <PROPERTY>image</PROPERTY>
+      <PROPERTY>recipe</PROPERTY>
+      <PROPERTY>author</PROPERTY>
+      <PROPERTY>ingredients</PROPERTY>
+      <PROPERTY>strength</PROPERTY>
+      <PROPERTY>comments</PROPERTY>
+      <PROPERTY>parrent_cocktails</PROPERTY>
+    </ENTITY>
+
+    <RELATIONSHIPS ent_ids = "user cocktail">
+      <PROPERTY>ONE TO MANY</PROPERTY>
+    </RELATIONSHIPS>
+    <RELATIONSHIPS ent_ids = "cocktail ingredient">
+      <PROPERTY>MANY TO MANY</PROPERTY>
+    </RELATIONSHIPS>
+    <RELATIONSHIPS ent_ids = "cocktail comment">
+      <PROPERTY>ONE TO MANY</PROPERTY>
+    </RELATIONSHIPS>
+    <RELATIONSHIPS ent_ids = "user comment">
+      <PROPERTY>ONE TO MANY</PROPERTY>
+    </RELATIONSHIPS>
+    <RELATIONSHIPS ent_ids = "cocktail tag">
+      <PROPERTY>MANY TO MANY</PROPERTY>
+    </RELATIONSHIPS>
+    <RELATIONSHIPS ent_ids = "ingredient tag">
+      <PROPERTY>MANY TO MANY</PROPERTY>
+    </RELATIONSHIPS>
+  </DATA>
+  
+  
+  <ROLES>
+    <ROLE>
+      <TITLE>User</TITLE>
+      <RESPOSIBILITY>Добавление коктейлей</RESPOSIBILITY>
+      <RESPOSIBILITY>Добавление ингредиентов</RESPOSIBILITY>
+      <RESPOSIBILITY>Добавление тегов</RESPOSIBILITY>
+      <RESPOSIBILITY>Добавление комментариев</RESPOSIBILITY>
+      <RESPOSIBILITY>Редактирование и удаление собственных коктейлей, ингредиентов, комментариев, а также своего профиля</RESPOSIBILITY>
+      <TOTALUSERS>1000</TOTALUSERS>
+    </ROLE>
+    <ROLE>
+      <TITLE>DrunkMaster</TITLE>
+      <RESPOSIBILITY>Редактирование и удаление любых сущностей (+ всё, что разрешено рядовым пользователям)</RESPOSIBILITY>
+      <TOTALUSERS>2</TOTALUSERS>
+    </ROLE>
+  </ROLES>
+  
+  
+  <TECHSPEC>
+    <TYPE>Web-development</TYPE>
+    
+    <DEVTOOLS>
+      <DEV>Python(FastAPI)</DEV>
+    </DEVTOOLS>
+    
+    <DBMS>
+      <TITLE>MongoDB</TITLE>
+      <VERSION>6.0</VERSION>
+      <REASONING>Удобность и простота настройки и использования.</REASONING>
+    </DBMS>
+  </TECHSPEC>
+</ISSPECS>
