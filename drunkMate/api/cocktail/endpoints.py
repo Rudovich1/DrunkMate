@@ -31,7 +31,14 @@ async def put_cocktail(cocktail: contract.CPutCocktail,
 
 @router.get("/cocktail_api/get_cocktail/{id}")
 async def get_cocktail(id: str):
-    return await cocktail_crud.get_cocktail(id)
+    cocktail = await cocktail_crud.get_cocktail(id)
+    if cocktail is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The cocktail does not exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return cocktail
     
     
 @router.get('/cocktail_api/get_cocktails')

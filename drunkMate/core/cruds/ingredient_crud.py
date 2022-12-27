@@ -21,7 +21,7 @@ async def get_ingredients():
     ingredients = repository.get_ingredients()
     resp = []
     for item in ingredients:
-        item = {'name': item['name'], 'description': item['description'], 'tags': item['tags']}
+        item = {'id': item['_id'], 'name': item['name'], 'description': item['description'], 'tags': item['tags']}
         resp.append(item)
     return resp
 

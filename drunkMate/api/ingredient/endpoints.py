@@ -13,7 +13,7 @@ async def post_ingredient(post_ingredient: contract.CPostIngredient,
     await ingredient_crud.post_ingredient(post_ingredient.dict())
 
 
-@router.get("/ingredient_api/get_ingredients", response_model=list[contract.CGetIngredients])
+@router.get("/ingredient_api/get_ingredients")
 async def get_ingredients():
     ingredients = list(await ingredient_crud.get_ingredients())
     resp = []

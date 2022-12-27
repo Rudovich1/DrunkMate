@@ -72,6 +72,7 @@ def put_cocktail(cocktail_id: str, item: dict, db=drunkMate_db):
 def delete_cocktail(cocktail_id: str, db=drunkMate_db):
     collection = db['cocktails']
     collection.delete_one(filter={'_id': ObjectId(cocktail_id)})
+    
 
 # --------------------------------INGREDIENT--------------------------------
 
