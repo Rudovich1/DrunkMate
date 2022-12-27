@@ -15,17 +15,7 @@ async def post_ingredient(post_ingredient: contract.CPostIngredient,
 
 @router.get("/ingredient_api/get_ingredients")
 async def get_ingredients():
-    ingredients = list(await ingredient_crud.get_ingredients())
-    resp = []
-    for item in ingredients:
-        resp.append(
-            contract.CGetIngredients(
-                name=item['name'],
-                tags=item['tags'],
-                description=item['description']
-            )
-        )
-    return resp
+    return await ingredient_crud.get_ingredients()
 
 
 @router.put("/ingredient_api/put_ingredient")
