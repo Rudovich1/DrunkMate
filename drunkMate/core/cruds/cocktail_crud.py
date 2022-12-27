@@ -2,6 +2,7 @@ from drunkMate.core import repository
 from bson.objectid import ObjectId
 from fastapi import HTTPException, status
 
+
 async def get_cocktail(cocktail_id: str):
     cocktail = repository.get_cocktail(cocktail_id)
     if cocktail is None:
@@ -14,7 +15,7 @@ async def get_cocktail(cocktail_id: str):
             'recipe': cocktail['recipe'],
             'author': str(cocktail['author']),
             'strength': cocktail['strength'],
-            'ingredients': list(map(lambda x: str(x), cocktail['ingredients'])),
+            'ingredients': list(cocktail['ingredients']),
             'comments': list(map(lambda x: str(x), cocktail['comments'])),
             'parent_cocktails': cocktail['parent_cocktails']}
 
