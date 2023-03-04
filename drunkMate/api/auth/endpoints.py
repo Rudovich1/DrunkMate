@@ -22,8 +22,9 @@ async def create_new_user(user_registration: contract.UserRegistration):
             detail="User with this login already exists",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    user_registration['role'] = repository.Role.USER.value
-    await user_crud.create_user(user_registration.dict())
+    user_registration_dict = user_registration.dict()
+    user_registration_dict['role'] = repository.Role.USER.value
+    await user_crud.create_user(user_registration_dict)
     access_token = user_crud.create_access_token(data={"sub": user_registration.login})
     respond = contract.Token(access_token=access_token, token_type="bearer")
     #respond = contract.Token(accessToken=access_token, tokenType="bearer")
