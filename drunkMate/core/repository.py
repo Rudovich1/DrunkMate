@@ -17,13 +17,6 @@ class Strength(Enum):
     LOW = 1
     MEDIUM = 2
     STRONG = 3
-    
-    
-class Strength(Enum):
-    NONE = 0
-    LOW = 1
-    MEDIUM = 2
-    STRONG = 3
 
 
 class UnitType(Enum):
