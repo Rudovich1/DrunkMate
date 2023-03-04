@@ -61,9 +61,7 @@ async def delete_comment(comment_id: str, cocktail_id: str):
     else:
         cocktail['rating'] = (cocktail['rating'] * len(cocktail['comments']) - comment['rating']) / (len(cocktail['comments']) - 1)
         cocktail['comments'].remove(ObjectId(comment_id))
-
-    print(cocktail)    
-
+        
     repository.put_cocktail(cocktail_id, {'rating': cocktail['rating'], 'comments': cocktail['comments']})
     repository.delete_comment(comment_id)
 

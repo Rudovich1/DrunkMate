@@ -188,10 +188,8 @@ def get_comments(cocktail_id: str, db=drunkMate_db):
     if cocktail is None:
         return None
     comments_ids = cocktail['comments']
-    print(comments_ids)
     collection = db['comments']
     comments = list(collection.find(filter={'_id': {"$in": comments_ids}}))
-    print(comments)
     return comments
 
 
