@@ -17,6 +17,19 @@ class Strength(Enum):
     LOW = 1
     MEDIUM = 2
     STRONG = 3
+    
+    
+class Strength(Enum):
+    NONE = 0
+    LOW = 1
+    MEDIUM = 2
+    STRONG = 3
+
+
+class UnitType(Enum):
+    MILLILITERS = 0
+    GRAMS = 1
+    UNITS = 2
 
 
 # --------------------------------USER--------------------------------
@@ -25,6 +38,13 @@ class Strength(Enum):
 def get_user(login: str, db=drunkMate_db):
     users_collection = db["users"]
     respond = users_collection.find_one({"login": login})
+    if respond:
+        respond = dict(respond)
+    return respond
+
+def get_user_by_id(id: ObjectId, db = drunkMate_db):
+    users_collection = db["users"]
+    respond = users_collection.find_one({"_id": id})
     if respond:
         respond = dict(respond)
     return respond
@@ -169,9 +189,8 @@ def get_comments(cocktail_id: str, db=drunkMate_db):
         return None
     comments_ids = cocktail['comments']
     collection = db['comments']
-    print(comments_ids)
     comments = list(collection.find(filter={'_id': {"$in": comments_ids}}))
-    print(comments)
+    return comments
 
 
 def delete_comment(comment_id: str, db=drunkMate_db):

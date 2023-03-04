@@ -5,15 +5,16 @@ from pydantic import EmailStr
 from drunkMate.api.auth import contract
 from drunkMate.core import repository
 from drunkMate.core.cruds import user_crud
+from drunkMate.startup import initialization
 
 router = APIRouter()
 
 
 @router.on_event("startup")
 async def startup():
-    await user_crud.create_admin()
-
-
+    await initialization.initialization()
+    
+    
 @router.post("/auth_api/registration", response_model=contract.Token)
 async def create_new_user(user_registration: contract.UserRegistration):
     if repository.get_user(user_registration.login):
