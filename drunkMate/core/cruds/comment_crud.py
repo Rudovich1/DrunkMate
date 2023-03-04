@@ -7,7 +7,7 @@ from drunkMate.core.cruds import cocktail_crud
 
 
 async def post_comment(cocktail_id: str, author_id: str, text: str, rating: int):
-    cocktail = await cocktail_crud.get_cocktail(cocktail_id)
+    cocktail = repository.get_cocktail(cocktail_id)
 
     if cocktail is None:
         raise HTTPException(
@@ -60,7 +60,9 @@ async def delete_comment(comment_id: str, cocktail_id: str):
         cocktail['comments'] = []
     else:
         cocktail['rating'] = (cocktail['rating'] * len(cocktail['comments']) - comment['rating']) / (len(cocktail['comments']) - 1)
-        cocktail['comments'] = cocktail['comments'].remove(ObjectId(comment_id))
+        cocktail['comments'].remove(ObjectId(comment_id))
+
+    print(cocktail)    
 
     repository.put_cocktail(cocktail_id, {'rating': cocktail['rating'], 'comments': cocktail['comments']})
     repository.delete_comment(comment_id)

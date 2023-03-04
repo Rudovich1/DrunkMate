@@ -74,7 +74,7 @@ def get_cocktail(cocktail_id: str, db=drunkMate_db):
     try:
         cocktail_id = ObjectId(cocktail_id)
         cocktail_collection = db["cocktails"]
-        cocktail = cocktail_collection.find_one({"_id": cocktail_id}) # <--  LOL
+        cocktail = cocktail_collection.find_one({"_id": cocktail_id})
     except:
         cocktail = None
     return cocktail
@@ -169,7 +169,7 @@ def get_tag(is_ingredient: bool, name: str, db=drunkMate_db):
 def post_comment(author_id: str, text: str, rating: int, db=drunkMate_db):
     collection = db["comments"]
     elem = collection.insert_one({'author': ObjectId(author_id), 'text': text, 'rating': rating})
-    return elem.inserted_id
+    return str(elem.inserted_id)
 
 
 def put_comment(comment_id: str, text: str, rating: int, db=drunkMate_db):
@@ -188,8 +188,10 @@ def get_comments(cocktail_id: str, db=drunkMate_db):
     if cocktail is None:
         return None
     comments_ids = cocktail['comments']
+    print(comments_ids)
     collection = db['comments']
     comments = list(collection.find(filter={'_id': {"$in": comments_ids}}))
+    print(comments)
     return comments
 
 
