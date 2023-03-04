@@ -20,7 +20,7 @@ async def get_comments(cocktail_id: str):
     await comment_crud.get_comments(cocktail_id)
 
 
-@router.delete("/comment api/delete comment")
+@router.delete("/comment_api/delete_comment")
 async def delete_comment(comment: contract.CDeleteComment,
                          current_user: User = Depends(user_crud.get_current_user)):
 

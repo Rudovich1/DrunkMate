@@ -34,9 +34,5 @@ async def get_image(guid: str = 'test'):
     if len(prefixed) > 0:
         return FileResponse(f"{str(get_project_root())}/images/{prefixed[0]}")
     else:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Image not found",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+        return FileResponse(f"{str(get_project_root())}/images/test_yihcube.jpg")
 
