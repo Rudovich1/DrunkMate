@@ -74,7 +74,7 @@ def get_cocktail(cocktail_id: str, db=drunkMate_db):
     return cocktail
 
 
-def get_cocktails(search=None, tags=None, ingredients=None, db=drunkMate_db):
+def get_cocktails(search="", tags=None, ingredients=None, db=drunkMate_db):
     search = str(f"/*{search}/*") if search and len(search) > 0 else "/*"
     cocktails = db['cocktails'].find({
             "name": {"$regex": search, "$options": "i"},
