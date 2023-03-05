@@ -19,3 +19,8 @@ class UserRegistration(UserBase):
 class UserLogin(BaseModel):
     login: str
     password: str
+
+
+class GoogleOAuthCredentials(BaseModel):
+    client_id: str
+    token: str
