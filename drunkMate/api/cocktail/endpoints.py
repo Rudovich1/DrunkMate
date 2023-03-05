@@ -44,7 +44,7 @@ async def get_cocktail(id: str):
     
     
 @router.post('/cocktail_api/get_cocktails')
-async def get_cocktails(cocktail_info: contract.CGetCocktails):
+async def get_cocktails(cocktail_info: contract.CGetCocktails = contract.CGetCocktails()):
     return await cocktail_crud.get_cocktails(cocktail_info.search, cocktail_info.tags, cocktail_info.ingredients)
     
     

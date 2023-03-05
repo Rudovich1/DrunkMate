@@ -60,6 +60,6 @@ class CGetCocktailsByIngredients(BaseModel):
 
 
 class CGetCocktails(BaseModel):
-    search: str = Field(default="")
-    tags: List[str] = Field(default=[])
-    ingredients: List[str] = Field(default=[])
+    search: str | None = Field(default="")
+    tags: List[str] | None = Field(default=[])
+    ingredients: List[str] | None = Field(default=[])
