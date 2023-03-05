@@ -48,8 +48,8 @@ async def post_cocktail(item: dict, author_id: str):
         repository.post_tag({'name': tag})
     
     
-async def get_cocktails():
-    cocktails = list(repository.get_cocktails())
+async def get_cocktails(search = "", tags = [], ingredients=[]):
+    cocktails = list(repository.get_cocktails(search, tags, ingredients))
     res_cocktails = []
     for cocktail in cocktails:
         res_cocktails.append({  'id': str(cocktail['_id']),
@@ -98,37 +98,3 @@ async def delete_cocktail(cocktail_id: str):
         repository.delete_comment(str(comment))
     
     repository.delete_cocktail(cocktail_id)
-    
-    
-async def get_cocktails_by_tags(tags: list[str]):
-    
-    cocktails = repository.get_cocktails()
-    res_cocktails = []
-    
-    for cocktail in cocktails:
-        for tag in tags:
-            if tag not in cocktail['tags']:
-                break
-        else:
-            res_cocktails.append(str(cocktail['_id']))
-                
-    return res_cocktails
-
-
-async def get_cocktails_by_ingredients(ingredients: list[str]):
-    
-    cocktails = repository.get_cocktails()
-    res_cocktails = []
-    
-    for cocktail in cocktails:
-        cocktail_ingredients = []
-        for cocktail_ingredient in cocktail['ingredients']:
-            cocktail_ingredients.append(cocktail_ingredient['name'])
-                
-        for ingredient in ingredients:
-            if ingredient not in cocktail_ingredients:
-                break
-        else:
-            res_cocktails.append(str(cocktail['_id']))
-                
-    return res_cocktails

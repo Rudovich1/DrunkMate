@@ -18,18 +18,18 @@ async def get_ingredients():
     return await ingredient_crud.get_ingredients()
 
 
-@router.put("/ingredient_api/put_ingredient")
-async def put_ingredient(put_ingredient: contract.CPutIngredient,
-                         current_user: User = Depends(user_crud.get_current_user)):
+# @router.put("/ingredient_api/put_ingredient")
+# async def put_ingredient(put_ingredient: contract.CPutIngredient,
+#                          current_user: User = Depends(user_crud.get_current_user)):
     
-    if current_user['role'] == 1:
-        await ingredient_crud.put_ingredient(put_ingredient.dict())
-    else:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Not enough rights",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
+#     if current_user['role'] == 1:
+#         await ingredient_crud.put_ingredient(put_ingredient.dict())
+#     else:
+#         raise HTTPException(
+#             status_code=status.HTTP_403_FORBIDDEN,
+#             detail="Not enough rights",
+#             headers={"WWW-Authenticate": "Bearer"},
+#         )
 
 
 @router.delete("/ingredient_api/delete_ingredient")
@@ -43,8 +43,3 @@ async def delete_ingredient(delete_ingredient: contract.CDeleteIngredient,
             detail="Not enough rights",
             headers={"WWW-Authenticate": "Bearer"},
         )
-        
-        
-@router.post('/ingredient_api/get_ingredients_by_tags')
-async def get_ingredients_by_tags(tags: contract.CGetIngredientsByTags):
-    return await ingredient_crud.get_ingredients_by_tags(tags.tags)

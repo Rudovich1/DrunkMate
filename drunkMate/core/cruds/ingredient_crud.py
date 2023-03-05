@@ -50,21 +50,8 @@ async def delete_ingredient(ingredient_name: str):
             headers={"WWW-Authenticate": "Bearer"},
         )
     
+    for cocktail in await cocktail_crud.get_cocktails(ingredients=[ingredient_name]):
+        await cocktail_crud.delete_cocktail(cocktail['id'])
+    
     repository.delete_ingredient(ingredient_name)
-    
-    
-    
-    
-async def get_ingredients_by_tags(tags: list[str]):
-    
-    ingredients = repository.get_ingredients()
-    res_ingredients = []
-    
-    for ingredient in ingredients:
-        for tag in tags:
-            if tag not in ingredient['tags']:
-                break
-        else:
-            res_ingredients.append(ingredient['_id'])
-                
-    return res_ingredients
+

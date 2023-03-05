@@ -80,7 +80,7 @@ def get_cocktails(search="", tags=[], ingredients=[], db=drunkMate_db):
     if len(tags) > 0:
         flt["tags"] = {"$all": tags}
     if len(ingredients) > 0:
-        flt["ingredients"] = {"$elemMatch": {"name": {"$all": ingredients}}}
+        flt["ingredients.name"] = {"$all": ingredients}
     cocktails = db['cocktails'].find(flt)
     return cocktails
 
