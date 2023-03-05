@@ -35,17 +35,19 @@ async def post_cocktail(item: dict, author_id: str):
     }
     
     for ingredient in item['ingredients']:
-        if (repository.get_ingredient(ingredient['name']) is None):
+        if repository.get_ingredient(ingredient['name']) is None:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="There are no declared ingredients",
                 headers={"WWW-Authenticate": "Bearer"},
             )
     
-    repository.post_cocktail(cocktail)
+    cock_id = str(repository.post_cocktail(cocktail))
     
     for tag in item['tags']:
         repository.post_tag({'name': tag})
+
+    return cock_id
     
     
 async def get_cocktails():
