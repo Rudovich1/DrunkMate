@@ -105,9 +105,13 @@ def post_ingredient(item: dict, db=drunkMate_db):
         collection.insert_one(item)
 
 
-def get_ingredients(db=drunkMate_db):
-    collection = db["ingredients"]
-    return list(collection.find())
+def get_ingredients(search = "", tags = [], db=drunkMate_db):
+    search = str(f"/*{search}/*") if search and len(search) > 0 else "/*"
+    flt = {"name": {"$regex": search, "$options": "i"}}
+    if len(tags) > 0:
+        flt["tags"] = {"$all": tags}
+    ingredients = db['ingredients'].find(flt)
+    return ingredients
 
 
 def put_ingredient(old_name: str, item: dict, db=drunkMate_db):
@@ -136,15 +140,16 @@ def post_tag(item: dict, is_ingredient: bool = False, db=drunkMate_db):
     collection.update_one(filter={'name': item['name']}, update={'$set': item}, upsert=True)
 
 
-def get_tags(is_ingredient: bool, ids: list = None, db=drunkMate_db):
+def get_tags(search, is_ingredient: bool, ids: list = None, db=drunkMate_db):
+    search = str(f"/*{search}/*") if search and len(search) > 0 else "/*"
+    flt = {"name": {"$regex": search, "$options": "i"}}
     if is_ingredient:
         collection = db["ingredient_tags"]
     else:
         collection = db["cocktail_tags"]
-    if ids is None:
-        resp = collection.find()
-    else:
-        resp = collection.find({"_id": {"$in": ids}})
+    if ids is not None:
+        flt["_id"] = {"$in": ids}
+    resp = collection.find(flt)
     return resp
 
 

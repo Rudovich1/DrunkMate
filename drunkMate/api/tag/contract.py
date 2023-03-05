@@ -19,3 +19,10 @@ class CPostIngredientTag(TagBase): pass
 
 
 class CDeleteIngredientTag(TagBase): pass
+
+
+class CGetIngredientTags(BaseModel):
+    search : str = ""
+    
+
+class CGetCocktailTags(CGetIngredientTags): pass
