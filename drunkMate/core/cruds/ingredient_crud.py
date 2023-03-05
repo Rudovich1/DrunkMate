@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 
 async def post_ingredient(item: dict):
     
-    if repository.get_ingredient(item['name']) is None:
+    if repository.get_ingredient(item['name']) is not None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The ingredient already exists",
