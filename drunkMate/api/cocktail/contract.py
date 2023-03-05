@@ -57,8 +57,9 @@ class CGetCocktailsByTags(BaseModel):
     
 class CGetCocktailsByIngredients(BaseModel):
     ingredients: List[str]
-    
+
+
 class CGetCocktails(BaseModel):
-    search : str = ""
+    search: str = ""
     tags: List[str] = []
     ingredients: List[str] = []
