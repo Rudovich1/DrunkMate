@@ -35,6 +35,7 @@ def get_user(login: str, db=drunkMate_db):
         respond = dict(respond)
     return respond
 
+
 def get_user_by_id(id: ObjectId, db = drunkMate_db):
     users_collection = db["users"]
     respond = users_collection.find_one({"_id": id})
@@ -60,7 +61,7 @@ def add_user(item: dict, db=drunkMate_db):
 
 def post_cocktail(item: dict,  db=drunkMate_db):
     collection = db['cocktails']
-    collection.insert_one(item)
+    return collection.insert_one(item)
 
 
 def get_cocktail(cocktail_id: str, db=drunkMate_db):
@@ -73,8 +74,18 @@ def get_cocktail(cocktail_id: str, db=drunkMate_db):
     return cocktail
 
 
-def get_cocktails(db=drunkMate_db):
-    return db['cocktails'].find()
+def get_cocktails(search=None, tags=None, ingredients=None, db=drunkMate_db):
+    search = str(f"/*{search}/*") if search and len(search) > 0 else "/*"
+    cocktails = db['cocktails'].find({
+            "name": {"$regex": search, "$options": "i"},
+            "tags": {"$all": {"$in": tags}, "$options": "i"},
+            "ingredients": {
+                "name": {"$all": {"$in": ingredients}, "$options": "i"}
+            }
+        }
+    )
+
+    return cocktails
 
 
 def put_cocktail(cocktail_id: str, item: dict, db=drunkMate_db):
