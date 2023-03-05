@@ -36,7 +36,7 @@ def get_user(login: str, db=drunkMate_db):
     return respond
 
 
-def get_user_by_id(id: ObjectId, db = drunkMate_db):
+def get_user_by_id(id: ObjectId, db=drunkMate_db):
     users_collection = db["users"]
     respond = users_collection.find_one({"_id": id})
     if respond:
@@ -59,7 +59,7 @@ def add_user(item: dict, db=drunkMate_db):
 # --------------------------------COCKTAIL--------------------------------
 
 
-def post_cocktail(item: dict,  db=drunkMate_db):
+def post_cocktail(item: dict, db=drunkMate_db):
     collection = db['cocktails']
     return collection.insert_one(item)
 
@@ -76,26 +76,24 @@ def get_cocktail(cocktail_id: str, db=drunkMate_db):
 
 def get_cocktails(search="", tags=[], ingredients=[], db=drunkMate_db):
     search = str(f"/*{search}/*") if search and len(search) > 0 else "/*"
-    cocktails = db['cocktails'].find({
-            "name": {"$regex": search, "$options": "i"},
-            "tags": {"$all": tags},
-            "ingredients": {"$elemMatch":{"name": {"$all": ingredients}}
-            }
-        }
-    )
-
+    flt = {"name": {"$regex": search, "$options": "i"}}
+    if len(tags) > 0:
+        flt["tags"] = {"$all": tags}
+    if len(ingredients) > 0:
+        flt["ingredients"] = {"$elemMatch": {"name": {"$all": ingredients}}}
+    cocktails = db['cocktails'].find(flt)
     return cocktails
 
 
 def put_cocktail(cocktail_id: str, item: dict, db=drunkMate_db):
     collection = db['cocktails']
     return collection.update_one({'_id': ObjectId(cocktail_id)}, {'$set': item})
-    
-    
+
+
 def delete_cocktail(cocktail_id: str, db=drunkMate_db):
     collection = db['cocktails']
     collection.delete_one(filter={'_id': ObjectId(cocktail_id)})
-    
+
 
 # --------------------------------INGREDIENT--------------------------------
 
@@ -115,7 +113,7 @@ def get_ingredients(db=drunkMate_db):
 def put_ingredient(old_name: str, item: dict, db=drunkMate_db):
     collection = db["ingredients"]
     collection.update_one(filter={'name': old_name}, update={'$set': item})
-        
+
 
 def delete_ingredient(ingredient_name: str, db=drunkMate_db):
     collection = db["ingredients"]
@@ -125,7 +123,8 @@ def delete_ingredient(ingredient_name: str, db=drunkMate_db):
 def get_ingredient(name: str, db=drunkMate_db):
     collection = db["ingredients"]
     return collection.find_one({'name': name})
-    
+
+
 # --------------------------------TAG--------------------------------
 
 
@@ -137,7 +136,7 @@ def post_tag(item: dict, is_ingredient: bool = False, db=drunkMate_db):
     collection.update_one(filter={'name': item['name']}, update={'$set': item}, upsert=True)
 
 
-def get_tags(is_ingredient: bool, ids: list=None, db=drunkMate_db):
+def get_tags(is_ingredient: bool, ids: list = None, db=drunkMate_db):
     if is_ingredient:
         collection = db["ingredient_tags"]
     else:
@@ -155,14 +154,14 @@ def delete_tag(is_ingredient: bool, tag_name: str, db=drunkMate_db):
     else:
         collection = db['cocktail_tags']
     collection.delete_one({'name': tag_name})
-    
-    
+
+
 def get_tag(is_ingredient: bool, name: str, db=drunkMate_db):
     if is_ingredient:
         collection = db["ingredient_tags"]
     else:
         collection = db["cocktail_tags"]
-        
+
     return collection.find_one({'name': name})
 
 
