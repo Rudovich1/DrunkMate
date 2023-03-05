@@ -60,7 +60,7 @@ async def swap_token_from_external_provider(credentials: contract.GoogleOAuthCre
         credentials.client_id,
     )
     user = repository.get_user(id_info['email'])
-    if user is not None:
+    if user is None:
         usr = {
             "login": id_info["email"],
             "name": id_info["name"],
