@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, UploadFile, File
 from starlette import status
 
 from drunkMate.core.cruds import cocktail_crud, user_crud
 from drunkMate.api.cocktail import contract
 from drunkMate.api.user.contract import User
+from drunkMate.api.image.endpoints import post_image
 
 router = APIRouter()
 
@@ -11,8 +12,9 @@ router = APIRouter()
 @router.post("/cocktail_api/post_cocktail")
 async def post_cocktail(cocktail: contract.CPostCocktail,
                         current_user: User = Depends(user_crud.get_current_user)):
-    
-    await cocktail_crud.post_cocktail(cocktail.dict(), current_user['_id'])
+
+    guid = await cocktail_crud.post_cocktail(cocktail.dict(), current_user['_id'])
+    return guid
 
 
 @router.put("/cocktail_api/put_cocktail")
