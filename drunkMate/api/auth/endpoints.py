@@ -71,10 +71,3 @@ async def swap_token_from_external_provider(credentials: contract.GoogleOAuthCre
     access_token = user_crud.create_access_token(data={"sub": id_info["email"]})
     respond = contract.Token(access_token=access_token, token_type="bearer")
     return respond
-
-    # user_registration_dict = user_registration.dict()
-    # user_registration_dict['role'] = repository.Role.USER.value
-    # await user_crud.create_user(user_registration_dict)
-    # access_token = user_crud.create_access_token(data={"sub": user_registration.login})
-    # respond = contract.Token(access_token=access_token, token_type="bearer")
-    # return respond
