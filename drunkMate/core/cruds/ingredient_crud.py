@@ -1,10 +1,10 @@
 from drunkMate.core import repository
-from drunkMate.core.cruds import tag_crud
+from drunkMate.core.cruds import cocktail_crud
 from fastapi import HTTPException, status
 
 async def post_ingredient(item: dict):
     
-    if repository.get_ingredient(item['name']) is not None:
+    if repository.get_ingredient(item['name']) is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The ingredient already exists",
@@ -28,7 +28,7 @@ async def get_ingredients():
 
 async def put_ingredient(item: dict):
     
-    if repository.get_ingredient(item['name']) is not None:
+    if repository.get_ingredient(item['name']) is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="TThe ingredient does not exist",
@@ -43,7 +43,7 @@ async def put_ingredient(item: dict):
 
 async def delete_ingredient(ingredient_name: str):
     
-    if repository.get_ingredient(ingredient_name) is not None:
+    if repository.get_ingredient(ingredient_name) is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="The ingredient does not exist",
@@ -51,6 +51,8 @@ async def delete_ingredient(ingredient_name: str):
         )
     
     repository.delete_ingredient(ingredient_name)
+    
+    
     
     
 async def get_ingredients_by_tags(tags: list[str]):
