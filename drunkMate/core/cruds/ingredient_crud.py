@@ -17,8 +17,8 @@ async def post_ingredient(item: dict):
         repository.post_tag({'name': tag}, is_ingredient=True)
 
 
-async def get_ingredients():
-    ingredients = repository.get_ingredients()
+async def get_ingredients(search = "", tags = []):
+    ingredients = repository.get_ingredients(search, tags)
     resp = []
     for item in ingredients:
         item = {'id': str(item['_id']), 'name': item['name'], 'description': item['description'], 'tags': item['tags']}

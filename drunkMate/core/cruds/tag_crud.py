@@ -14,8 +14,8 @@ async def post_tag(tag_data: dict, is_ingredient=False):
     return repository.post_tag(tag_data, is_ingredient=is_ingredient)  
 
 
-async def get_tags(is_ingredient=False, ids: list=None):
-    resp = list(repository.get_tags(is_ingredient=is_ingredient, ids=ids))
+async def get_tags(search="", is_ingredient=False, ids: list=None):
+    resp = list(repository.get_tags(search, is_ingredient, ids))
     names = []
     for item in resp:
         names.append(item['name'])

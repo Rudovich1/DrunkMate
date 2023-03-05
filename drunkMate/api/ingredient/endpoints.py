@@ -13,9 +13,9 @@ async def post_ingredient(post_ingredient: contract.CPostIngredient,
     await ingredient_crud.post_ingredient(post_ingredient.dict())
 
 
-@router.get("/ingredient_api/get_ingredients")
-async def get_ingredients():
-    return await ingredient_crud.get_ingredients()
+@router.post("/ingredient_api/get_ingredients")
+async def get_ingredients(ingredient_info: contract.CGetIngredients):
+    return await ingredient_crud.get_ingredients(ingredient_info.search, ingredient_info.tags)
 
 
 # @router.put("/ingredient_api/put_ingredient")

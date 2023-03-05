@@ -15,8 +15,9 @@ class Ingredient(IngredientBase):
     id: str
 
 
-class CGetIngredients(IngredientBase):
-    tags: List[str]
+class CGetIngredients(BaseModel):
+    search : str = ""
+    tags: List[str] = []
 
 
 class IngredientRequest(IngredientBase):
@@ -35,7 +36,3 @@ class CPutIngredient(CPostIngredient):
 
 class CDeleteIngredient(BaseModel):
     name: str
-    
-    
-class CGetIngredientsByTags(BaseModel):
-    tags: list[str]

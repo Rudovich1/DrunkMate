@@ -14,9 +14,9 @@ async def post_cocktail_tag(tag: contract.CPostCocktailTag,
     ans = await tag_crud.post_tag(tag.dict())
 
 
-@router.get("/tag_api/get_cocktail_tags")
-async def get_cocktail_tags():
-    return await tag_crud.get_tags()
+@router.post("/tag_api/get_cocktail_tags")
+async def get_cocktail_tags(tag_info: contract.CGetCocktailTags):
+    return await tag_crud.get_tags(tag_info.search)
 
 
 @router.delete("/tag_api/delete_cocktail_tag")
@@ -38,9 +38,9 @@ async def post_ingredient_tag(tag: contract.CPostIngredientTag,
     await tag_crud.post_tag(tag.dict(), is_ingredient=True)
 
 
-@router.get("/tag_api/get_ingredient_tags")
-async def get_ingredient_tags():
-    return await tag_crud.get_tags(is_ingredient=True)
+@router.post("/tag_api/get_ingredient_tags")
+async def get_ingredient_tags(tag_info: contract.CGetIngredientTags):
+    return await tag_crud.get_tags(tag_info.search, is_ingredient=True)
 
 
 @router.delete("/tag_api/delete_ingredient_tag")

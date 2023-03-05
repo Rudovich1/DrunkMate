@@ -60,13 +60,3 @@ async def delete_cocktail(cocktail: contract.CDeleteCocktail,
             detail="Not enough rights",
             headers={"WWW-Authenticate": "Bearer"},
         )
-
-
-@router.post('/cocktail_api/get_cocktails_by_tags')
-async def get_cocktails_by_tags(tags: contract.CGetCocktailsByTags):
-    return await cocktail_crud.get_cocktails_by_tags(tags.tags)
-
-
-@router.post('/cocktail_api/get_cocktails_by_ingredients')
-async def get_cocktails_by_ingredients(ingredients: contract.CGetCocktailsByIngredients):
-    return await cocktail_crud.get_cocktails_by_ingredients(ingredients.ingredients)
