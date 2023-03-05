@@ -61,7 +61,7 @@ def add_user(item: dict, db=drunkMate_db):
 
 def post_cocktail(item: dict, db=drunkMate_db):
     collection = db['cocktails']
-    return collection.insert_one(item)
+    return collection.insert_one(item).inserted_id
 
 
 def get_cocktail(cocktail_id: str, db=drunkMate_db):
