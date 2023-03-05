@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+from google.auth.transport import requests
+from google.oauth2 import id_token
 from pydantic import EmailStr
 
 from drunkMate.api.auth import contract
@@ -13,8 +15,8 @@ router = APIRouter()
 @router.on_event("startup")
 async def startup():
     await initialization.initialization()
-    
-    
+
+
 @router.post("/auth_api/registration", response_model=contract.Token)
 async def create_new_user(user_registration: contract.UserRegistration):
     if repository.get_user(user_registration.login):
@@ -28,7 +30,7 @@ async def create_new_user(user_registration: contract.UserRegistration):
     await user_crud.create_user(user_registration_dict)
     access_token = user_crud.create_access_token(data={"sub": user_registration.login})
     respond = contract.Token(access_token=access_token, token_type="bearer")
-    #respond = contract.Token(accessToken=access_token, tokenType="bearer")
+    # respond = contract.Token(accessToken=access_token, tokenType="bearer")
     return respond
 
 
@@ -46,5 +48,26 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
         )
     access_token = user_crud.create_access_token(data={"sub": user_inwork["login"]})
     response = contract.Token(access_token=access_token, token_type="Bearer")
-    #response = contract.Token(accessToken=access_token, tokenType="Bearer") - for node client
+    # response = contract.Token(accessToken=access_token, tokenType="Bearer") - for node client
     return response
+
+
+@router.post("/auth_api/swap_tokens/google")
+async def swap_token_from_external_provider(credentials: contract.GoogleOAuthCredentials):
+    id_info = id_token.verify_oauth2_token(
+        credentials.token,
+        requests.Request(),
+        credentials.client_id,
+    )
+    user = repository.get_user(id_info['email'])
+    if user is None:
+        usr = {
+            "login": id_info["email"],
+            "name": id_info["name"],
+            "hashed_password": None,
+            "role": 0
+        }
+        repository.add_user(usr)
+    access_token = user_crud.create_access_token(data={"sub": id_info["email"]})
+    respond = contract.Token(access_token=access_token, token_type="bearer")
+    return respond
