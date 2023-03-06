@@ -102,7 +102,10 @@ def post_ingredient(item: dict, db=drunkMate_db):
     collection = db["ingredients"]
     resp = collection.find_one({"name": item["name"]})
     if resp is None:
-        collection.insert_one(item)
+        id = collection.insert_one(item).inserted_id
+    else:
+        id = str(resp["_id"])
+    return id
 
 
 def get_ingredients(search="", tags=[], db=drunkMate_db):
