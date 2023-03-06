@@ -30,6 +30,12 @@ async def get_ingredient(id: str):
     return resp
 
 
+async def get_ingredient_by_name(name: str):
+    resp = repository.get_ingredient(name)
+    resp["_id"] = str(resp["_id"])
+    return resp
+
+
 async def put_ingredient(item: dict):
     if repository.get_ingredient(item["old_name"]) is None:
         raise HTTPException(

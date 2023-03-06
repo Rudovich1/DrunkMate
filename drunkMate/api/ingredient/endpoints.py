@@ -27,6 +27,11 @@ async def get_ingredient(id: str):
     return await ingredient_crud.get_ingredient(id=id)
 
 
+@router.get("/ingredient_api/get_ingredient_by_name/{name}")
+async def get_ingredient_by_name(name: str):
+    return await ingredient_crud.get_ingredient_by_name(name)
+
+
 @router.put("/ingredient_api/put_ingredient")
 async def put_ingredient(
     put_ingredient: contract.CPutIngredient,
