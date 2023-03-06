@@ -7,22 +7,27 @@ class TagBase(BaseModel):
 
 class Tag(TagBase):
     id: str
-    
-    
-class CPostCocktailTag(TagBase): pass
 
 
-class CDeleteCocktailTag(TagBase): pass
+class CPostCocktailTag(TagBase):
+    pass
 
 
-class CPostIngredientTag(TagBase): pass
+class CDeleteCocktailTag(TagBase):
+    pass
 
 
-class CDeleteIngredientTag(TagBase): pass
+class CPostIngredientTag(TagBase):
+    pass
+
+
+class CDeleteIngredientTag(TagBase):
+    pass
 
 
 class CGetIngredientTags(BaseModel):
-    search : str = ""
-    
+    search: str = ""
 
-class CGetCocktailTags(CGetIngredientTags): pass
+
+class CGetCocktailTags(CGetIngredientTags):
+    pass

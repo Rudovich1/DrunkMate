@@ -20,30 +20,27 @@ class UnitType(Enum):
 
 
 class _IngredientWrapper(object):
-    def __init__(self,
-                 ingredient: Ingredient,
-                 amount: int,
-                 unit: UnitType):
-
+    def __init__(self, ingredient: Ingredient, amount: int, unit: UnitType):
         self.ingredient = ingredient
         self.amount = amount
         self.unit = unit
 
 
 class Cocktail(object):
-    def __inti__(self,
-                 id: str,
-                 name: str,
-                 description: str,
-                 rating: float,
-                 tags: list[Tag],
-                 recipe: str,
-                 author: User,
-                 strength: Strength,
-                 ingredient_wrappers: list[_IngredientWrapper],
-                 comments: list[Comment],
-                 parent_cocktails: list):
-
+    def __inti__(
+        self,
+        id: str,
+        name: str,
+        description: str,
+        rating: float,
+        tags: list[Tag],
+        recipe: str,
+        author: User,
+        strength: Strength,
+        ingredient_wrappers: list[_IngredientWrapper],
+        comments: list[Comment],
+        parent_cocktails: list,
+    ):
         self.id = id
         self.name = name
         self.description = description

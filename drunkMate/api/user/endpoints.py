@@ -14,7 +14,6 @@ async def get_users_me(
     respond = contract.User(
         name=current_user["name"],
         login=current_user["login"],
-        #image
+        # image
     )
     return respond
-

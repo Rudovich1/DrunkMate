@@ -39,7 +39,9 @@ def create_access_token(data: dict):
 
 
 async def create_user(user_registration: dict):
-    user_registration["hashed_password"] = get_password_hash(user_registration["password"])
+    user_registration["hashed_password"] = get_password_hash(
+        user_registration["password"]
+    )
     repository.add_user(user_registration)
 
 
@@ -63,4 +65,3 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     if user is None:
         raise credentials_exception
     return user
-

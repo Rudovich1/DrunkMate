@@ -17,6 +17,7 @@ python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 pymongo = "^4.3.3"
 python-multipart = "^0.0.5"
 google-api-python-client = "^2.80.0"
+black = "^23.1.0"
 
 
 [build-system]

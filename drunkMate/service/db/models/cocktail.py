@@ -17,7 +17,7 @@ class CocktailBase(SQLModel):
     description: str = Field(max_length=500, nullable=True)
     rating: Optional[float]
     tags: List[ObjectId]
-    #image: Optional[BLOB] = None
+    # image: Optional[BLOB] = None
     recipe: str = Field(max_length=5000)
     strength: int
     ingredients: List[Ingredient]

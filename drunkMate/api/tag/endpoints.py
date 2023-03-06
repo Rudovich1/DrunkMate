@@ -9,8 +9,10 @@ router = APIRouter()
 
 
 @router.post("/tag_api/post_cocktail_tag")
-async def post_cocktail_tag(tag: contract.CPostCocktailTag,
-                              current_user: User = Depends(user_crud.get_current_user)):
+async def post_cocktail_tag(
+    tag: contract.CPostCocktailTag,
+    current_user: User = Depends(user_crud.get_current_user),
+):
     ans = await tag_crud.post_tag(tag.dict())
 
 
@@ -20,9 +22,11 @@ async def get_cocktail_tags(tag_info: contract.CGetCocktailTags):
 
 
 @router.delete("/tag_api/delete_cocktail_tag")
-async def delete_cocktail_tag(tag: contract.CDeleteCocktailTag,
-                              current_user: User = Depends(user_crud.get_current_user)):
-    if current_user['role'] == 1:
+async def delete_cocktail_tag(
+    tag: contract.CDeleteCocktailTag,
+    current_user: User = Depends(user_crud.get_current_user),
+):
+    if current_user["role"] == 1:
         await tag_crud.delete_tag(tag.name, is_ingredient=False)
     else:
         raise HTTPException(
@@ -33,8 +37,10 @@ async def delete_cocktail_tag(tag: contract.CDeleteCocktailTag,
 
 
 @router.post("/tag_api/post_ingredient_tag")
-async def post_ingredient_tag(tag: contract.CPostIngredientTag,
-                                current_user: User = Depends(user_crud.get_current_user)):
+async def post_ingredient_tag(
+    tag: contract.CPostIngredientTag,
+    current_user: User = Depends(user_crud.get_current_user),
+):
     await tag_crud.post_tag(tag.dict(), is_ingredient=True)
 
 
@@ -44,9 +50,11 @@ async def get_ingredient_tags(tag_info: contract.CGetIngredientTags):
 
 
 @router.delete("/tag_api/delete_ingredient_tag")
-async def delete_ingredient_tag(tag: contract.CDeleteIngredientTag,
-                              current_user: User = Depends(user_crud.get_current_user)):
-    if current_user['role'] == 1:
+async def delete_ingredient_tag(
+    tag: contract.CDeleteIngredientTag,
+    current_user: User = Depends(user_crud.get_current_user),
+):
+    if current_user["role"] == 1:
         await tag_crud.delete_tag(tag.name, is_ingredient=True)
     else:
         raise HTTPException(

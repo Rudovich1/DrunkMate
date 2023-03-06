@@ -31,12 +31,12 @@ class CPostCocktail(BaseModel):
     name: str = Field(min_length=1, max_length=170)
     description: str = Field(max_length=1000)
     tags: List[str]
-    #image: Optional[BLOB] = None
+    # image: Optional[BLOB] = None
     recipe: str = Field(max_length=5000)
     strength: int
     ingredients: List[Ingredient]
     parent_cocktails: List[str]
-    
+
 
 class CPutCocktail(CPostCocktail):
     id: str
@@ -54,8 +54,8 @@ class CDeleteCocktail(BaseModel):
 
 class CGetCocktailsByTags(BaseModel):
     tags: List[str]
-    
-    
+
+
 class CGetCocktailsByIngredients(BaseModel):
     ingredients: List[str]
 

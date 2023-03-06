@@ -15,6 +15,7 @@ class CDeleteComment(BaseModel):
     cocktail_id: str
     author_login: str
 
+
 class Author(BaseModel):
     id: str
     name: str

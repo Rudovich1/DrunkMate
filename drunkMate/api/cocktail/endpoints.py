@@ -10,18 +10,22 @@ router = APIRouter()
 
 
 @router.post("/cocktail_api/post_cocktail")
-async def post_cocktail(cocktail: contract.CPostCocktail,
-                        current_user: User = Depends(user_crud.get_current_user)):
-
-    guid = await cocktail_crud.post_cocktail(cocktail.dict(), current_user['_id'])
+async def post_cocktail(
+    cocktail: contract.CPostCocktail,
+    current_user: User = Depends(user_crud.get_current_user),
+):
+    guid = await cocktail_crud.post_cocktail(cocktail.dict(), current_user["_id"])
     return guid
 
 
 @router.put("/cocktail_api/put_cocktail")
-async def put_cocktail(cocktail: contract.CPutCocktail,
-                       current_user: User = Depends(user_crud.get_current_user)):
-
-    if current_user['role'] == 1 or str(current_user['_id']) == str((await cocktail_crud.get_cocktail(cocktail.id))['author']):
+async def put_cocktail(
+    cocktail: contract.CPutCocktail,
+    current_user: User = Depends(user_crud.get_current_user),
+):
+    if current_user["role"] == 1 or str(current_user["_id"]) == str(
+        (await cocktail_crud.get_cocktail(cocktail.id))["author"]
+    ):
         await cocktail_crud.put_cocktail(cocktail.dict())
     else:
         raise HTTPException(
@@ -41,18 +45,23 @@ async def get_cocktail(id: str):
             headers={"WWW-Authenticate": "Bearer"},
         )
     return cocktail
-    
-    
-@router.post('/cocktail_api/get_cocktails')
-async def get_cocktails(cocktail_info: contract.CGetCocktails = contract.CGetCocktails()):
-    return await cocktail_crud.get_cocktails(cocktail_info.search, cocktail_info.tags, cocktail_info.ingredients)
-    
-    
-@router.delete('/cocktail_api/delete_cocktail')
-async def delete_cocktail(cocktail: contract.CDeleteCocktail,
-                          current_user: User = Depends(user_crud.get_current_user)):
-    
-    if current_user['role'] == 1 or current_user['login'] == cocktail.login:
+
+
+@router.post("/cocktail_api/get_cocktails")
+async def get_cocktails(
+    cocktail_info: contract.CGetCocktails = contract.CGetCocktails(),
+):
+    return await cocktail_crud.get_cocktails(
+        cocktail_info.search, cocktail_info.tags, cocktail_info.ingredients
+    )
+
+
+@router.delete("/cocktail_api/delete_cocktail")
+async def delete_cocktail(
+    cocktail: contract.CDeleteCocktail,
+    current_user: User = Depends(user_crud.get_current_user),
+):
+    if current_user["role"] == 1 or current_user["login"] == cocktail.login:
         await cocktail_crud.delete_cocktail(cocktail.id)
     else:
         raise HTTPException(

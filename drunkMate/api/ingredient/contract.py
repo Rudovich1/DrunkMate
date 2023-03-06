@@ -7,7 +7,7 @@ from drunkMate.api.tag.contract import TagBase
 
 class IngredientBase(BaseModel):
     name: str
-    #image:
+    # image:
     description: str = Field(max_length=500)
 
 
@@ -16,7 +16,7 @@ class Ingredient(IngredientBase):
 
 
 class CGetIngredients(BaseModel):
-    search : str = ""
+    search: str = ""
     tags: List[str] = []
 
 
@@ -28,11 +28,11 @@ class CPostIngredient(BaseModel):
     name: str
     description: str = Field(max_length=500)
     tags: list[str]
-    
-    
+
+
 class CPutIngredient(CPostIngredient):
     old_name: str
-    
+
 
 class CDeleteIngredient(BaseModel):
     name: str

@@ -26,7 +26,7 @@ async def create_new_user(user_registration: contract.UserRegistration):
             headers={"WWW-Authenticate": "Bearer"},
         )
     user_registration_dict = user_registration.dict()
-    user_registration_dict['role'] = repository.Role.USER.value
+    user_registration_dict["role"] = repository.Role.USER.value
     await user_crud.create_user(user_registration_dict)
     access_token = user_crud.create_access_token(data={"sub": user_registration.login})
     respond = contract.Token(access_token=access_token, token_type="bearer")
@@ -53,19 +53,21 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 
 @router.post("/auth_api/swap_tokens/google")
-async def swap_token_from_external_provider(credentials: contract.GoogleOAuthCredentials):
+async def swap_token_from_external_provider(
+    credentials: contract.GoogleOAuthCredentials,
+):
     id_info = id_token.verify_oauth2_token(
         credentials.token,
         requests.Request(),
         credentials.client_id,
     )
-    user = repository.get_user(id_info['email'])
+    user = repository.get_user(id_info["email"])
     if user is None:
         usr = {
             "login": id_info["email"],
             "name": id_info["name"],
             "hashed_password": None,
-            "role": 0
+            "role": 0,
         }
         repository.add_user(usr)
     access_token = user_crud.create_access_token(data={"sub": id_info["email"]})
