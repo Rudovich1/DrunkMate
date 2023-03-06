@@ -28,15 +28,30 @@ async def get_ingredients(search = "", tags = []):
 
 async def put_ingredient(item: dict):
     
-    if repository.get_ingredient(item['name']) is None:
+    if repository.get_ingredient(item['old_name']) is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="TThe ingredient does not exist",
+            detail="The ingredient does not exist",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    if repository.get_ingredient(item['name']) is not None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="The ingredient already exists",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
     for tag in item['tags']:
-        repository.post_tag({'name': tag}, is_ingredient=True)
+        if (repository.get_tag(True, tag) is None):
+            repository.post_tag({'name': tag}, is_ingredient=True)
+    
+    for cocktail in repository.get_cocktails(ingredients=[item['old_name']]):
+        for ingredient in cocktail['ingredients']:
+            if ingredient['name'] == item['old_name']:
+                ingredient['name'] = item['name']
+                repository.put_cocktail(str(cocktail['_id']), {'ingredients': cocktail['ingredients']})
+                continue
         
     repository.put_ingredient(item['old_name'], {'name': item['name'], 'description': item['description'], 'tags': item['tags']})
     

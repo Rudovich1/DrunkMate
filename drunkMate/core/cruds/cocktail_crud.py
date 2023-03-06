@@ -64,25 +64,34 @@ async def get_cocktails(search = "", tags = [], ingredients=[]):
     return res_cocktails
 
 
-async def put_cocktail(cocktail_id: str, item: dict):
+async def put_cocktail(item: dict):
     
-    item = {'name': item['name'],
-            'description': item['description'],
-            'tags': item['tags'],
-            'recipe': item['recipe'],
-            'strength': item['strength'],
-            'ingredients': item['ingredients'],
-            'parent_cocktails': item['parent_cocktails'] }
-    
-    if repository.put_cocktail(cocktail_id, item) is None:
+    if (repository.get_cocktail(item['id']) is None):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="The cocktail does not exist",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    
+        
+    for ingredient in item['ingredients']:
+        if repository.get_ingredient(ingredient['name']) is None:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"The ingredient does not exist",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+            
     for tag in item['tags']:
-        repository.post_tag({'name': tag})
+        if (repository.get_tag(False, tag) is None):
+            repository.post_tag({'name': tag}, is_ingredient=False)
+    
+    repository.put_cocktail(item['id'], {'name': item['name'],
+                                        'description': item['description'],
+                                        'tags': item['tags'],
+                                        'recipe': item['recipe'],
+                                        'strength': item['strength'],
+                                        'ingredients': item['ingredients'],
+                                        'parent_cocktails': item['parent_cocktails']})
 
 
 async def delete_cocktail(cocktail_id: str):

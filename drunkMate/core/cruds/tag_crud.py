@@ -26,7 +26,7 @@ async def delete_tag(tag_name: str, is_ingredient=False):
     
     if repository.get_tag(is_ingredient, tag_name) is None:
         raise HTTPException(
-            status_code=status.HTTP_404_BAD_REQUEST,
+            status_code=status.HTTP_400_BAD_REQUEST,
             detail="The tag does not exist",
             headers={"WWW-Authenticate": "Bearer"},
         )
