@@ -10,10 +10,9 @@ async def post_ingredient(item: dict):
             detail="The ingredient already exists",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    id = repository.post_ingredient(item)
+    repository.post_ingredient(item)
     for tag in item["tags"]:
         repository.post_tag({"name": tag}, is_ingredient=True)
-    return id
 
 
 async def get_ingredients(search="", tags=[]):

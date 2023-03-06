@@ -12,7 +12,7 @@ async def post_ingredient(
     post_ingredient: contract.CPostIngredient,
     current_user: User = Depends(user_crud.get_current_user),
 ):
-    return await ingredient_crud.post_ingredient(post_ingredient.dict())
+    await ingredient_crud.post_ingredient(post_ingredient.dict())
 
 
 @router.post("/ingredient_api/get_ingredients")
