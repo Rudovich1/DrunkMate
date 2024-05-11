@@ -18,6 +18,8 @@ services:
   mongo:
     image: mongo:6.0
     restart: always
+    volumes:
+      - ./mongodb-data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
